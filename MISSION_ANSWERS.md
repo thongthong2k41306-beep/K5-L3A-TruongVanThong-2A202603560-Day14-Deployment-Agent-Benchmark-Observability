@@ -832,6 +832,12 @@ Hoặc kích hoạt môi trường core, vào `06-lab-complete/` rồi chạy `p
 
 ## AI log
 
+### CP8 — Ngày 25/11/2026
+
+- **Yêu cầu** Hoàn thành lab observability và tạo giao diện trình bày kết quả theo bố cục Grafana.
+- **Hỗ trợ AI** Chạy Compose, sửa đường dẫn Python user site để agent khởi động, chạy promtool và Locust, đo hai alert, đối chiếu Jaeger với log, chụp bốn ảnh từ UI đang chạy và đóng gói hồ sơ.
+- **Xác minh** Hai alert cùng firing, cả hai trace có log khớp `trace_id`, CSV Locust có hai lượt chạy 100 người dùng. Số liệu và cách mở UI xem trong [báo cáo](BENCHMARK_REPORT.md).
+
 ### CP7 — Ngày 25/11/2026
 
 - **Yêu cầu** Hoàn thành benchmark local Exercise 7.1–7.3.

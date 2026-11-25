@@ -1,0 +1,103 @@
+{
+  "sampled_at": "2026-11-25T12:58:40.908942+00:00",
+  "nginx_metrics_status": 404,
+  "queries": {
+    "request_rate_per_instance": {
+      "expr": "sum by (instance) (rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m]))",
+      "result": [
+        {
+          "metric": {
+            "instance": "172.19.0.7:8000"
+          },
+          "value": [
+            1795611521.712,
+            "8.748396127376648"
+          ]
+        },
+        {
+          "metric": {
+            "instance": "172.19.0.8:8000"
+          },
+          "value": [
+            1795611521.712,
+            "8.621434371706492"
+          ]
+        }
+      ]
+    },
+    "avg_seconds": {
+      "expr": "sum(rate(http_request_duration_seconds_sum{job=\"agent\",route=\"/ask\"}[1m])) / sum(rate(http_request_duration_seconds_count{job=\"agent\",route=\"/ask\"}[1m]))",
+      "result": [
+        {
+          "metric": {},
+          "value": [
+            1795611521.719,
+            "0.24199054835569006"
+          ]
+        }
+      ]
+    },
+    "p95_seconds": {
+      "expr": "histogram_quantile(0.95,sum by(le)(rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m])))",
+      "result": [
+        {
+          "metric": {},
+          "value": [
+            1795611521.729,
+            "0.2979010647193811"
+          ]
+        }
+      ]
+    },
+    "tokens_per_second": {
+      "expr": "sum by(type)(rate(llm_tokens_total{job=\"agent\"}[1m]))",
+      "result": [
+        {
+          "metric": {
+            "type": "input"
+          },
+          "value": [
+            1795611521.741,
+            "1258.3247954384183"
+          ]
+        },
+        {
+          "metric": {
+            "type": "output"
+          },
+          "value": [
+            1795611521.741,
+            "666.4453723547483"
+          ]
+        }
+      ]
+    },
+    "up": {
+      "expr": "up{job=\"agent\"}",
+      "result": [
+        {
+          "metric": {
+            "__name__": "up",
+            "instance": "172.19.0.7:8000",
+            "job": "agent"
+          },
+          "value": [
+            1795611521.749,
+            "1"
+          ]
+        },
+        {
+          "metric": {
+            "__name__": "up",
+            "instance": "172.19.0.8:8000",
+            "job": "agent"
+          },
+          "value": [
+            1795611521.749,
+            "1"
+          ]
+        }
+      ]
+    }
+  }
+}

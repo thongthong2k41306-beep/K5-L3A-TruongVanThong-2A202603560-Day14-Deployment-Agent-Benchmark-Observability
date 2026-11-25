@@ -1,0 +1,128 @@
+{
+  "groups": [
+    {
+      "name": "agent-cost",
+      "file": "/etc/prometheus/alert_rules.yml",
+      "rules": [
+        {
+          "state": "inactive",
+          "name": "LLMCostBurnRateHigh",
+          "query": "sum(rate(llm_cost_usd_total{job=\"agent\"}[5m])) * 3600 > 2",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "Tốc độ chi tiêu hiện tại: ${{ $value | printf \"%.2f\" }}/giờ",
+            "summary": "Chi phí LLM đang vượt $2/giờ"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.000407613,
+          "lastEvaluation": "2026-11-25T13:03:36.918356619Z",
+          "type": "alerting"
+        }
+      ],
+      "interval": 5,
+      "limit": 0,
+      "evaluationTime": 0.000471081,
+      "lastEvaluation": "2026-11-25T13:03:36.918299086Z"
+    },
+    {
+      "name": "agent-slo",
+      "file": "/etc/prometheus/alert_rules.yml",
+      "rules": [
+        {
+          "state": "firing",
+          "name": "AgentHighErrorRate",
+          "query": "sum(rate(http_requests_total{job=\"agent\",route=\"/ask\",status=~\"5..\"}[1m])) / sum(rate(http_requests_total{job=\"agent\",route=\"/ask\"}[1m])) > 0.05",
+          "duration": 60,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Error rate hiện tại: {{ $value | humanizePercentage }} (SLO: < 5%)",
+            "summary": "Error rate /ask vượt 5%"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hiện tại: 21.84% (SLO: < 5%)",
+                "summary": "Error rate /ask vượt 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T12:59:47.401817116Z",
+              "value": "2.183711391021845e-01"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001914766,
+          "lastEvaluation": "2026-11-25T13:03:36.748953068Z",
+          "type": "alerting"
+        },
+        {
+          "state": "firing",
+          "name": "AgentHighLatencyP95",
+          "query": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{job=\"agent\",route=\"/ask\"}[1m]))) > 1",
+          "duration": 120,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "warning"
+          },
+          "annotations": {
+            "description": "p95 hiện tại: {{ $value | humanizeDuration }} (SLO: < 1s)",
+            "summary": "p95 latency /ask vượt 1 giây"
+          },
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hiện tại: 1.882s (SLO: < 1s)",
+                "summary": "p95 latency /ask vượt 1 giây"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T13:01:32.401817116Z",
+              "value": "1.8815913462678402e+00"
+            }
+          ],
+          "health": "ok",
+          "evaluationTime": 0.001851872,
+          "lastEvaluation": "2026-11-25T13:03:36.750908997Z",
+          "type": "alerting"
+        },
+        {
+          "state": "inactive",
+          "name": "AgentInstanceDown",
+          "query": "up{job=\"agent\"} == 0",
+          "duration": 30,
+          "keepFiringFor": 0,
+          "labels": {
+            "severity": "critical"
+          },
+          "annotations": {
+            "description": "Prometheus không gọi được /metrics của {{ $labels.instance }} trong 30s",
+            "summary": "Instance agent {{ $labels.instance }} không scrape được"
+          },
+          "alerts": [],
+          "health": "ok",
+          "evaluationTime": 0.00036846,
+          "lastEvaluation": "2026-11-25T13:03:36.752798587Z",
+          "type": "alerting"
+        }
+      ],
+      "interval": 5,
+      "limit": 0,
+      "evaluationTime": 0.004355944,
+      "lastEvaluation": "2026-11-25T13:03:36.748819431Z"
+    }
+  ]
+}

@@ -88,6 +88,6 @@ Lần đầu build thất bại ở `CGO_ENABLED=0 go build -o myapp .` vì Root
 
 ## Screenshots
 
-- [Dashboard](screenshots/dashboard.jpg) hiển thị lượt triển khai thành công.
+- [Dashboard](screenshots/dashboard.png) hiển thị lượt triển khai thành công.
 - [Dịch vụ đang chạy](screenshots/running.png) hiển thị trạng thái Live và URL public.
 - [Kết quả kiểm tra](screenshots/test.png) hiển thị 4/4 phép thử PASS.

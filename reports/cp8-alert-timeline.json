@@ -1,0 +1,644 @@
+{
+  "stages": [
+    {
+      "stage": "A",
+      "trigger_utc": "2026-11-25T12:59:12.892822+00:00",
+      "poll_seconds": 3,
+      "faults": {
+        "MOCK_ERROR_RATE": 0.2,
+        "MOCK_SLOW_RATE": 0.03
+      },
+      "first_firing": {
+        "AgentHighErrorRate": {
+          "observed_after_seconds": 98.2,
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hiện tại: 19.05% (SLO: < 5%)",
+                "summary": "Error rate /ask vượt 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T12:59:47.401817116Z",
+              "value": "1.905183967722623e-01"
+            }
+          ]
+        }
+      },
+      "timeline": [
+        {
+          "seconds": 7.0,
+          "states": {
+            "AgentHighErrorRate": "inactive",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 10.1,
+          "states": {
+            "AgentHighErrorRate": "inactive",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 13.1,
+          "states": {
+            "AgentHighErrorRate": "inactive",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 16.1,
+          "states": {
+            "AgentHighErrorRate": "inactive",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 19.1,
+          "states": {
+            "AgentHighErrorRate": "inactive",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 22.1,
+          "states": {
+            "AgentHighErrorRate": "inactive",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 25.2,
+          "states": {
+            "AgentHighErrorRate": "inactive",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 28.2,
+          "states": {
+            "AgentHighErrorRate": "inactive",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 31.2,
+          "states": {
+            "AgentHighErrorRate": "inactive",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 34.3,
+          "states": {
+            "AgentHighErrorRate": "inactive",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 37.3,
+          "states": {
+            "AgentHighErrorRate": "inactive",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 40.3,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 43.3,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 46.4,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 49.5,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 52.5,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 55.5,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 58.5,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 61.6,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 64.6,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 67.6,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 70.6,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 73.7,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 76.7,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 79.7,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 82.8,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 85.8,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 88.8,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 91.9,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 95.1,
+          "states": {
+            "AgentHighErrorRate": "pending",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 98.2,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "inactive"
+          }
+        }
+      ]
+    },
+    {
+      "stage": "B",
+      "trigger_utc": "2026-11-25T13:00:51.082474+00:00",
+      "poll_seconds": 3,
+      "faults": {
+        "MOCK_ERROR_RATE": 0.2,
+        "MOCK_SLOW_RATE": 0.3
+      },
+      "first_firing": {
+        "AgentHighErrorRate": {
+          "observed_after_seconds": 23.9,
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighErrorRate",
+                "severity": "critical"
+              },
+              "annotations": {
+                "description": "Error rate hiện tại: 17.66% (SLO: < 5%)",
+                "summary": "Error rate /ask vượt 5%"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T12:59:47.401817116Z",
+              "value": "1.7663413227048355e-01"
+            }
+          ]
+        },
+        "AgentHighLatencyP95": {
+          "observed_after_seconds": 169.1,
+          "alerts": [
+            {
+              "labels": {
+                "alertname": "AgentHighLatencyP95",
+                "severity": "warning"
+              },
+              "annotations": {
+                "description": "p95 hiện tại: 1.882s (SLO: < 1s)",
+                "summary": "p95 latency /ask vượt 1 giây"
+              },
+              "state": "firing",
+              "activeAt": "2026-11-25T13:01:32.401817116Z",
+              "value": "1.8815913462678402e+00"
+            }
+          ]
+        }
+      },
+      "timeline": [
+        {
+          "seconds": 23.9,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 26.9,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 29.9,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 32.9,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 36.0,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 39.0,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 42.0,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "inactive"
+          }
+        },
+        {
+          "seconds": 45.0,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 48.0,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 51.2,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 54.2,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 57.2,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 60.2,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 63.3,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 66.3,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 69.3,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 72.3,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 75.3,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 78.4,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 81.4,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 84.4,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 87.4,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 90.5,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 93.5,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 96.5,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 99.5,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 102.5,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 105.6,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 108.6,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 111.6,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 114.6,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 117.6,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 120.7,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 123.7,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 126.7,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 129.7,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 132.8,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 135.8,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 138.8,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 141.9,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 144.9,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 147.9,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 150.9,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 154.0,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 157.0,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 160.0,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 163.0,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 166.0,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "pending"
+          }
+        },
+        {
+          "seconds": 169.1,
+          "states": {
+            "AgentHighErrorRate": "firing",
+            "AgentHighLatencyP95": "firing"
+          }
+        }
+      ]
+    }
+  ]
+}

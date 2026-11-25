@@ -82,11 +82,52 @@ python eval/run_eval.py --url http://127.0.0.1:8002 --min-accuracy 0.85 \
 
 ## 4. Observability stack (production)
 
-Thực hiện ở CP8. Chưa có dữ liệu Grafana, Jaeger hoặc thời gian alert firing trong lần chạy CP7.
+### 4.1 Golden Signals và lưu lượng
+
+Ở tải 30 người dùng, mẫu lấy lúc 19:58:40 GMT+7 cho thấy latency `/ask` trung bình khoảng **242,0 ms** và **p95 297,9 ms**, tính từ cửa sổ Prometheus 1 phút. Khoảng cách 55,9 ms cho thấy các request ở phía chậm mất nhiều thời gian hơn mức trung bình. Các giá trị trong ảnh Grafana có thể lệch nhẹ do mốc query và resampling của biểu đồ.
+
+- Hai target đang UP xử lý lần lượt **8,75** và **8,62 request/giây**. Nginx chia gần đều ở mẫu này. Đường thứ ba trong lịch sử đồ thị thuộc lượt scale 3 trước đó.
+- Prometheus đo **1.258,3 input tokens/giây** và **666,4 output tokens/giây**. Panel token của Grafana dùng đường xếp chồng, nên đọc giá trị từng chuỗi qua query hoặc tooltip.
+- Các panel Golden Signals hiển thị traffic, error rate, latency và số request đang xử lý. [Ảnh Grafana](screenshots/grafana-dashboard.png) · [Mẫu Prometheus](reports/cp8-grafana-metrics.json).
+
+Client gọi `GET /metrics` qua Nginx nhận HTTP 404 theo cấu hình proxy. Prometheus scrape trực tiếp vào từng agent qua mạng Docker. Bước retrieval đưa tài liệu vào prompt, nên input có thêm nội dung system prompt, câu hỏi và context trước khi model tạo câu trả lời ngắn.
+
+### 4.2 Mô phỏng sự cố
+
+| Thử nghiệm | Thay đổi | Cảnh báo firing | Từ lúc áp dụng đến khi quan sát firing | Panel |
+|---|---|---|---:|---|
+| A | `MOCK_ERROR_RATE=0.2`, giữ slow rate 0.03 | `AgentHighErrorRate` | 98,2 giây | Error rate |
+| B | `MOCK_SLOW_RATE=0.3`, giữ error rate 0.2 để bắt cùng lúc | `AgentHighLatencyP95` | 169,1 giây | Latency p95 |
+
+Locust tạo tải khoảng 30 người dùng. Đo từ lúc gọi Compose để áp dụng biến môi trường đến lần poll đầu tiên thấy `firing`, nên số đo gồm recreate, scrape, chu kỳ đánh giá và thời gian `for`. Poll khoảng 3 giây. Khi chụp ảnh cả hai alert, error rate là 21,84% và p95 khoảng 1,882 s. [Timeline](reports/cp8-alert-timeline.json) · [Snapshot API](reports/cp8-alert-rules-firing.json) · [Ảnh Prometheus](screenshots/prometheus-alert-firing.png).
+
+Kiểm thử rule bằng `promtool test rules /p/alert_rules_test.yml` trả `SUCCESS`. Kiểm thử này xác minh logic rule trên dữ liệu giả lập, trong khi thời gian firing bên trên lấy từ Prometheus đang scrape stack Docker. [Kết quả promtool](reports/cp8-promtool.txt).
+
+Trường hợp E là lỗi chất lượng đầu ra. Các alert hiện tại theo dõi latency, lỗi HTTP, availability và cost, nên agent vẫn có thể trả nhanh và đúng mã HTTP trong khi trả lời sai. Dùng quality gate trên bộ golden trước merge, thêm eval định kỳ hoặc canary theo phiên bản sau deploy và cảnh báo khi accuracy giảm. Các trường hợp C–E không được kích hoạt trong lần chạy CP8 này.
+
+### 4.3 Trace và log
+
+| Trường hợp | Trace ID | Tổng thời gian (Jaeger) | Span LLM | Bằng chứng |
+|---|---|---:|---:|---|
+| Chậm, HTTP 200 | `882d02b48e99054f1779d94c6a454508` | 3.373,64 ms | 3.347,20 ms (99,22%) | [Trace chậm](screenshots/jaeger-slow-trace.png) · [JSON](reports/cp8-jaeger-slow.json) |
+| Lỗi, HTTP 503 | `0dcb9f667e0d99e3bb5c3c812b138dd6` | 135,11 ms | 96,31 ms, event `exception` | [Trace lỗi](screenshots/jaeger-error-trace.png) · [JSON](reports/cp8-jaeger-error.json) |
+
+Ở trace chậm, span `chat mock-llm-small` chiếm gần toàn bộ thời gian so với `agent.retrieve_context`. Các thời gian trong bảng đọc từ timestamp span Jaeger. Log ứng dụng dưới đây ghi thời gian theo middleware riêng và dùng `trace_id` để đối chiếu. Ở trace lỗi, chi tiết event chỉ ra `utils.mock_llm.LLMError` với upstream HTTP 503 mô phỏng.
+
+```json
+{"ts":"2026-11-25T13:03:45.442764+00:00","level":"INFO","service":"observable-agent","instance":"e24dc8ee9fef","event":"http_request","trace_id":"882d02b48e99054f1779d94c6a454508","span_id":"8d1865bbcfc61dc3","request_id":"16602e99c4d1","method":"POST","route":"/ask","status":200,"ms":1702.1}
+```
 
 ## 5. Benchmark scaling (production)
 
-Thực hiện ở CP8 với Locust headless. Các phép thử concurrency ở mục 2 đều chạy một agent local.
+Hai lượt dùng Locust headless qua cùng Nginx với 100 người dùng, tăng 10 người dùng/giây, thời lượng cấu hình 2 phút. Chờ Prometheus xác nhận đủ số target UP trước mỗi lượt. Agent chạy v2, mỗi container dùng một worker với giới hạn 0,5 CPU và 256 MiB. Docker Engine 29.9.3 trên máy có 12 CPU logic.
+
+| Số agent | Tổng request | RPS | p50 (ms) | p95 (ms) | p99 (ms) | Failures | CSV |
+|---:|---:|---:|---:|---:|---:|---|---|
+| 1 | 4.507 | 36,60 | 850 | 3.600 | 5.100 | 41 (0,91%) | [scale_1](benchmark-results/scale_1_stats.csv) |
+| 3 | 7.469 | 59,72 | 210 | 780 | 1.700 | 74 (0,99%) | [scale_3](benchmark-results/scale_3_stats.csv) |
+
+Các số trong bảng lấy từ hàng `Aggregated`, gồm `/ask` và `/health`. Nếu chỉ xét `POST /ask`, p95 giảm từ 3.700 xuống 840 ms. Toàn bộ lưu lượng tăng 63,2% và p95 giảm 78,3%. Kết quả cho thấy việc chia tải giữa các process giảm chờ khi một agent chịu tải cao. p99 vẫn ở mức 1.700 ms, phù hợp với việc còn các request mock LLM chậm. Số lần lỗi tuyệt đối tăng theo số request xử lý, còn tỉ lệ lỗi quanh 1% ở cả hai lượt.
 
 ## 6. Kết luận
 
@@ -95,3 +136,13 @@ Thực hiện ở CP8 với Locust headless. Các phép thử concurrency ở m�
 3. Kết hợp mức accuracy tối thiểu với kiểm tra regression theo từng câu để tránh bỏ sót lỗi khi tổng điểm vẫn đạt.
 
 Khi triển khai thật, theo dõi p99, tỉ lệ timeout và tỉ lệ retrieval không tìm thấy tài liệu. Chạy eval định kỳ trên bộ câu hỏi cố định để phát hiện suy giảm chất lượng khi health và latency vẫn ổn.
+
+## 7. Xem giao diện
+
+Mở `cp8-ui/index.html` để xem số liệu đã lưu, đổi chỉ số ở phần scaling và bấm ảnh để phóng to. Giao diện đọc snapshot được tạo từ CSV Locust và dữ liệu Prometheus/Jaeger thật. Mở từ thư mục gốc dự án trong PowerShell:
+
+```powershell
+Invoke-Item .\cp8-ui\index.html
+```
+
+Khi stack Docker đang chạy, mở Grafana live bằng `Start-Process "http://localhost:3000/d/day14-agent-overview"`. Dữ liệu đã lưu và giao diện CP8 vẫn xem được sau khi dừng stack.

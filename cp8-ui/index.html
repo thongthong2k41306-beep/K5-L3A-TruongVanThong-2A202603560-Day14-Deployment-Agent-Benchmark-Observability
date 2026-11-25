@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="vi">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Kết quả benchmark, cảnh báo và trace của agent Day 14.">
+<title>Agent Observability · Day 14</title>
+<link rel="stylesheet" href="style.css">
+<script src="data.js" defer></script>
+<script src="app.js" defer></script>
+<header class="top">
+  <div class="shell nav">
+    <a class="brand" href="#overview"><span class="mark" aria-hidden="true">∿</span>Agent Observability</a>
+    <nav aria-label="Nội dung"><a href="#observability">Metrics</a><a href="#scaling">Hiệu năng</a><a href="#signals">Cảnh báo & trace</a><a href="#evidence">Bằng chứng</a></nav>
+    <span class="edition">DAY 14 · CP8</span>
+  </div>
+</header>
+<main class="shell" id="overview">
+  <section class="intro" aria-labelledby="title">
+    <div class="eyebrow">BÁO CÁO THỰC NGHIỆM</div>
+    <h1 id="title">Quan sát <em>AI agent</em></h1>
+    <p>Metrics, benchmark và trace từ lần chạy Docker CP8.</p>
+    <div class="meta"><span id="run-date"></span><span>Mẫu đã lưu · bước 5 giây</span><a class="text-link" href="http://localhost:3000/d/day14-agent-overview">Grafana live (cần Docker)</a></div>
+  </section>
+  <p id="status" role="status"></p>
+  <section id="observability" aria-labelledby="golden-title">
+    <h2 class="dash-title" id="golden-title">Golden Signals · POST /ask</h2>
+    <div class="kpis" id="totals"></div>
+    <h2 class="dash-title">Latency & traffic</h2>
+    <div class="history-grid" id="traffic-history"></div>
+    <h2 class="dash-title">LLM & agent</h2>
+    <div class="history-grid detail-grid" id="llm-history"></div>
+  </section>
+  <section id="scaling" class="section" aria-labelledby="scale-title">
+    <div class="section-head"><div><div class="eyebrow">LOCUST</div><h2 id="scale-title">1 agent và 3 agent</h2></div>
+      <a class="text-link" href="../benchmark-results/scale_3_stats.csv">Tải CSV</a></div>
+    <div class="scale-grid">
+      <article class="panel chart-panel">
+        <div class="segmented" role="group" aria-label="Chỉ số biểu đồ">
+          <button data-metric="rps" type="button" aria-pressed="true">RPS</button>
+          <button data-metric="p95" type="button" aria-pressed="false">Latency p95</button>
+          <button data-metric="p99" type="button" aria-pressed="false">Latency p99</button>
+        </div>
+        <div id="bars" class="bars" aria-live="polite"></div>
+      </article>
+      <article class="panel table-panel">
+        <table><caption>Toàn bộ request</caption><thead><tr><th scope="col">Chỉ số</th><th scope="col">1 agent</th><th scope="col">3 agent</th></tr></thead><tbody id="scale-table"></tbody></table>
+      </article>
+    </div>
+  </section>
+  <section id="signals" class="section" aria-labelledby="signals-title">
+    <div class="section-head"><div><div class="eyebrow">PROMETHEUS & JAEGER</div><h2 id="signals-title">Từ cảnh báo đến trace</h2></div></div>
+    <div class="signal-grid">
+      <article class="panel"><h3>Cảnh báo đã firing</h3><div id="alerts"></div></article>
+      <article class="panel"><h3>Trace đã đối chiếu với log</h3><div id="traces"></div></article>
+    </div>
+  </section>
+  <section id="evidence" class="section" aria-labelledby="evidence-title">
+    <div class="section-head"><div><div class="eyebrow">ẢNH CHỤP TỪ LẦN CHẠY</div><h2 id="evidence-title">Bằng chứng</h2></div><a class="text-link" href="../BENCHMARK_REPORT.md">Báo cáo đầy đủ</a></div>
+    <div class="evidence-grid" id="gallery"></div>
+  </section>
+</main>
+<footer class="shell footer">Day 14 · Deployment, Benchmark & Observability</footer>
+<dialog id="viewer" aria-labelledby="viewer-title">
+  <div class="viewer-head"><h2 id="viewer-title"></h2><button id="close-viewer" type="button">Đóng</button></div>
+  <img id="full-image" alt="">
+</dialog>
+</html>

@@ -1,0 +1,14 @@
+{
+  "slow": {
+    "id": "882d02b48e99054f1779d94c6a454508",
+    "total_ms": 3373.635291,
+    "llm_span": "chat mock-llm-small",
+    "llm_span_ms": 3347.197721
+  },
+  "error": {
+    "id": "0dcb9f667e0d99e3bb5c3c812b138dd6",
+    "total_ms": 135.110608,
+    "llm_span": "chat mock-llm-small",
+    "llm_span_ms": 96.313582
+  }
+}
