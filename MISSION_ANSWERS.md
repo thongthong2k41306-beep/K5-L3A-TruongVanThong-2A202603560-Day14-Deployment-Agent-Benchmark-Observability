@@ -303,6 +303,40 @@ Lệnh này dừng/xóa container và network của project, giải phóng cổn
 
 Hai lưu ý khi đọc comment của mẫu: `HEALTHCHECK` đánh dấu healthy/unhealthy, không tự bảo đảm restart container; map cổng 443 trong Compose chưa tạo HTTPS vì Nginx hiện chỉ có cấu hình listen 80.
 
+## Part 3 — Cloud Deployment (CP6, Render)
+
+### Exercise 3.2 — Triển khai agent Part 6
+
+- URL public: https://k5-l3a-truongvanthong-2a202603560-day14.onrender.com
+- Platform: Render, Docker Web Service Free, Singapore; Redis-compatible Key Value cùng region.
+- Deploy agent trong `06-lab-complete/`, branch `main`, commit `c17b3e2`; không deploy app mẫu Part 3.
+- Ảnh người học cung cấp xác nhận `Deploy succeeded | Live`, deploy `dep-dc3ahtnlk1mc73eds76g`, thời lượng 1 phút 9 giây, ngày 25/11/2026 lúc 16:23:02 GMT+7.
+- Kiểm tra public thật: `GET /health` 200; `GET /ready` 200; `POST /ask` không có key 401. [Bằng chứng JSON](reports/cp6-public-checks.json).
+- Chưa chạy phép thử có key cloud và chưa lưu đủ ảnh thành file trong repo; **CP6 còn thiếu bằng chứng**, xem [DEPLOYMENT.md](DEPLOYMENT.md). Không coi việc dashboard Live là đủ chứng minh authenticated API.
+
+Lỗi đầu tiên là Render dùng Dockerfile Go ở gốc repository. Đặt Root Directory `06-lab-complete`, Dockerfile Path `./Dockerfile` và context `.` để build đúng agent Python; deploy sau đó đã thành công. Render tính Dockerfile/context tương đối với Root Directory theo [tài liệu monorepo](https://render.com/docs/monorepo-support#root-relative-settings).
+
+### So sánh `railway.toml` và `render.yaml`
+
+| Nội dung | `06-lab-complete/railway.toml` | `06-lab-complete/render.yaml` |
+|---|---|---|
+| Định dạng | TOML, cấu hình build/deploy của service. | YAML Blueprint, mô tả cả web service và Key Value. |
+| Build | Builder `DOCKERFILE`, Dockerfile `Dockerfile`; cần đặt service root `06-lab-complete`. | Runtime `docker`, `rootDir: 06-lab-complete`, Dockerfile `./Dockerfile`, context `.`. |
+| Health | `healthcheckPath = "/health"`, timeout 30 giây. | `healthCheckPath: /health`. |
+| Redis | Tạo/kết nối Redis và cấp `REDIS_URL` trong biến môi trường nền tảng. | Blueprint khai báo Key Value và dùng `fromService` để lấy connection string. |
+| API key | Cấp `AGENT_API_KEY` trong biến môi trường nền tảng. | Blueprint dùng `generateValue: true`; triển khai dashboard thủ công thì dùng Generate. |
+| Gói | File không quy định gói tính phí. | Khai báo `plan: free` cho cả hai service. |
+
+Lần triển khai thực tế sử dụng dashboard thủ công, không chạy Blueprint; do đó cần nhập đầy đủ Root Directory và biến môi trường trên dashboard. Không suy ra rằng nội dung `render.yaml` tự áp dụng cho service tạo thủ công.
+
+### Exercise 3.3 — Mô tả pipeline Cloud Run (đọc cấu hình, không deploy GCP)
+
+1. `cloudbuild.yaml` chạy `pytest tests/` trong Python 3.11 trước bước build; `waitFor: [test]` đặt build sau test.
+2. Docker build tạo hai tag `$COMMIT_SHA` và `latest`, sau đó push image lên `gcr.io/$PROJECT_ID/ai-agent`.
+3. Bước cuối deploy image theo commit lên Cloud Run tại `asia-southeast1`, public endpoint, min 1/max 10 instance, CPU 1, RAM 512 MiB, timeout 60 giây; lấy secret từ Secret Manager.
+4. `service.yaml` mô tả service/revision, concurrency 80, biến môi trường, secret reference, liveness `/health` và startup probe `/ready`; đây là cách khai báo cấu hình service riêng, không được pipeline trên tự đọc.
+5. Các placeholder project/image và secret mẫu phải được cấu hình khi triển khai GCP thật. CP6 chọn Render nên chỉ phân tích hai file, không khẳng định đã chạy Cloud Run.
+
 ## Part 4 — API Security (CP3)
 
 **CP3 đã hoàn thành: 34/34 kiểm tra đạt kết quả mong đợi.** Lượt chạy bắt đầu **15:15 GMT+7 ngày 25/11/2026**, dùng Ubuntu WSL2, Python 3.12.3 và hai môi trường core/gateway đã cài. Đây là **Part 4** theo lịch checkpoint K5, không phải Part 3 deploy cloud.
@@ -797,6 +831,13 @@ Trong Ubuntu, từ gốc repository:
 Hoặc kích hoạt môi trường core, vào `06-lab-complete/` rồi chạy `python check_production_ready.py`. Mốc “Public URL ready” của checker xác nhận cấu hình có sẵn; URL public chạy thật và ảnh triển khai thuộc CP6, chưa được chứng minh bằng kết quả CP5.
 
 ## AI log
+
+### CP6 — Ngày 25/11/2026 (đang hoàn thiện)
+
+- **Yêu cầu:** triển khai agent Part 6 bằng Render và giải thích từng bước trên dashboard.
+- **Người học thực hiện:** đăng nhập Render, tạo Key Value và Web Service, nhập cấu hình, cập nhật Root Directory và cung cấp ảnh deploy Live/URL public.
+- **Hỗ trợ AI:** kiểm tra source CP5, đẩy commit `c17b3e2` lên repository để Render build, chẩn đoán Dockerfile Go sai thư mục, gọi URL public xác nhận 200/200/401, tạo script nhập key ẩn và soạn tài liệu từ bằng chứng thực tế.
+- **Còn thiếu:** phép thử 200 có key cloud và lưu ảnh vào repository; chưa ghi CP6 hoàn thành. Không lưu key thật hoặc bịa ảnh/kết quả HTTP.
 
 ### CP1 — Ngày 25/11/2026
 

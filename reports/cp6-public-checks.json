@@ -1,0 +1,47 @@
+{
+  "run_at": "2026-11-25T09:27:30.627256+00:00",
+  "base_url": "https://k5-l3a-truongvanthong-2a202603560-day14.onrender.com",
+  "public_only": true,
+  "checks": [
+    {
+      "check": "health",
+      "method": "GET",
+      "path": "/health",
+      "expected_status": 200,
+      "status": 200,
+      "passed": true,
+      "body": {
+        "status": "ok",
+        "environment": "production"
+      },
+      "error": null
+    },
+    {
+      "check": "ready",
+      "method": "GET",
+      "path": "/ready",
+      "expected_status": 200,
+      "status": 200,
+      "passed": true,
+      "body": {
+        "ready": true
+      },
+      "error": null
+    },
+    {
+      "check": "ask_without_key",
+      "method": "POST",
+      "path": "/ask",
+      "expected_status": 401,
+      "status": 401,
+      "passed": true,
+      "body": {
+        "detail": "Invalid or missing X-API-Key"
+      },
+      "error": null
+    }
+  ],
+  "completed_checks": 3,
+  "required_checks": 4,
+  "passed": false
+}
