@@ -90,6 +90,6 @@ Lần đầu build thất bại ở `CGO_ENABLED=0 go build -o myapp .` vì Root
 
 Ảnh Live và URL đã được cung cấp trong hội thoại, nhưng chưa lưu thành các file nộp bài dưới đây. Cần ảnh thật, che giá trị key:
 
-- `screenshots/dashboard.png`: dashboard với deploy thành công.
+- [screenshots/dashboard.jpg](screenshots/dashboard.jpg): dashboard với deploy thành công.
 - `screenshots/running.png`: dịch vụ Live và URL public.
 - `screenshots/test.png`: kết quả đủ 4 mã HTTP.
