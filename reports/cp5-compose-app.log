@@ -1,0 +1,52 @@
+INFO:     Uvicorn running on http://0.0.0.0:57291 (Press CTRL+C to quit)
+INFO:     Started parent process [1]
+INFO:     Started server process [8]
+INFO:     Waiting for application startup.
+{"ts": "2026-11-25T08:49:48.992395+00:00", "level": "INFO", "event": "startup", "environment": "cp5-probe-427727c62a-budget", "port": 57291}
+INFO:     Application startup complete.
+INFO:     Started server process [9]
+INFO:     Waiting for application startup.
+{"ts": "2026-11-25T08:49:49.005009+00:00", "level": "INFO", "event": "startup", "environment": "cp5-probe-427727c62a-budget", "port": 57291}
+INFO:     Application startup complete.
+{"ts": "2026-11-25T08:49:52.968790+00:00", "level": "INFO", "event": "http_request", "request_id": "5e2afa92fefb4ebb86af780defe9b17d", "method": "GET", "route": "/health", "status": 200, "duration_ms": 1.354}
+{"ts": "2026-11-25T08:49:53.059005+00:00", "level": "INFO", "event": "http_request", "request_id": "02e512db375b44148a96f2e0ca0b5435", "method": "GET", "route": "/ready", "status": 200, "duration_ms": 14.577}
+{"ts": "2026-11-25T08:49:53.121551+00:00", "level": "INFO", "event": "http_request", "request_id": "7312a1dc1a7140ef88fecc4a51533423", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 44.936}
+{"ts": "2026-11-25T08:49:53.121798+00:00", "level": "INFO", "event": "http_request", "request_id": "295f6102809a4255847e690e6c278f76", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 49.609}
+{"ts": "2026-11-25T08:49:53.122210+00:00", "level": "INFO", "event": "http_request", "request_id": "ab98edd882f249409a4a425aa8f778d5", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 44.761}
+{"ts": "2026-11-25T08:49:53.122871+00:00", "level": "INFO", "event": "http_request", "request_id": "17833c4138f8465bbb5dab21e095f80d", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 36.315}
+{"ts": "2026-11-25T08:49:53.136552+00:00", "level": "INFO", "event": "http_request", "request_id": "d19d7da444a1432282d7a2cd7696d70d", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 55.556}
+{"ts": "2026-11-25T08:49:53.140806+00:00", "level": "INFO", "event": "http_request", "request_id": "d3671699c24c41dfb53d07c66e3e2540", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 54.314}
+{"ts": "2026-11-25T08:49:53.150045+00:00", "level": "INFO", "event": "http_request", "request_id": "ffebbe615b1e449481098c4f9d83ecbe", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 49.529}
+{"ts": "2026-11-25T08:49:53.156935+00:00", "level": "INFO", "event": "http_request", "request_id": "8f240591cfed4261beafb23a18fc8b76", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 53.433}
+{"ts": "2026-11-25T08:49:53.160764+00:00", "level": "INFO", "event": "http_request", "request_id": "a9c5d928981745e6b65c706728f402da", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 74.644}
+{"ts": "2026-11-25T08:49:53.161790+00:00", "level": "INFO", "event": "http_request", "request_id": "9f05a32a73ee4428a2229c4ee63dc858", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 51.67}
+{"ts": "2026-11-25T08:49:53.162482+00:00", "level": "INFO", "event": "http_request", "request_id": "c8450628ff564dee937e1a52038e6872", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 63.736}
+{"ts": "2026-11-25T08:49:53.164615+00:00", "level": "INFO", "event": "http_request", "request_id": "10958b98918346d0b28e5648981650bb", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 69.862}
+{"ts": "2026-11-25T08:49:53.165329+00:00", "level": "INFO", "event": "http_request", "request_id": "ae17f560f9044ca590313006a8de6cd2", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 52.937}
+{"ts": "2026-11-25T08:49:53.167067+00:00", "level": "INFO", "event": "http_request", "request_id": "aa68ec78a5de41e4a5f84bfde03b0a82", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 31.021}
+{"ts": "2026-11-25T08:49:53.168686+00:00", "level": "INFO", "event": "http_request", "request_id": "c56c69ca36844362862a70e61dfe85b8", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 59.602}
+{"ts": "2026-11-25T08:49:53.176302+00:00", "level": "INFO", "event": "http_request", "request_id": "29339ee06cfc4677ba4042e93871fea8", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 39.352}
+{"ts": "2026-11-25T08:49:53.178008+00:00", "level": "INFO", "event": "http_request", "request_id": "63ad0a1a46784794b3b08ff7e4e2a0fa", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 61.677}
+{"ts": "2026-11-25T08:49:53.181999+00:00", "level": "INFO", "event": "http_request", "request_id": "07d42f98386d454f83d4186e07293457", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 26.225}
+{"ts": "2026-11-25T08:49:53.191880+00:00", "level": "INFO", "event": "http_request", "request_id": "f8216b716a4e41bf8568e52e34d3a7b0", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 25.76}
+{"ts": "2026-11-25T08:49:53.202802+00:00", "level": "INFO", "event": "http_request", "request_id": "5698c4a33bf24267a6dee653167ab407", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 64.787}
+{"ts": "2026-11-25T08:49:53.203356+00:00", "level": "INFO", "event": "http_request", "request_id": "a1ed30c363254200976fdbc80b567874", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 67.606}
+{"ts": "2026-11-25T08:49:53.203740+00:00", "level": "INFO", "event": "http_request", "request_id": "7cc304716d5d44ec90fa638f80020883", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 58.741}
+{"ts": "2026-11-25T08:49:53.206346+00:00", "level": "INFO", "event": "http_request", "request_id": "da6ddf4622d044cab6167b19a12b95bf", "method": "POST", "route": "/ask", "status": 200, "duration_ms": 144.171}
+{"ts": "2026-11-25T08:49:53.219484+00:00", "level": "INFO", "event": "http_request", "request_id": "8c36dcf6c82647faaa83a6d94d85ad77", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 131.398}
+{"ts": "2026-11-25T08:49:53.220981+00:00", "level": "INFO", "event": "http_request", "request_id": "c2ac95b22fa440a2bc8364f2f1195277", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 109.106}
+{"ts": "2026-11-25T08:49:53.226163+00:00", "level": "INFO", "event": "http_request", "request_id": "8fa75199d93640d6a14822d723cba447", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 41.216}
+{"ts": "2026-11-25T08:49:53.229923+00:00", "level": "INFO", "event": "http_request", "request_id": "fda1c4b1dc45491ca3af1d0bb8d6bdb5", "method": "POST", "route": "/ask", "status": 200, "duration_ms": 158.049}
+{"ts": "2026-11-25T08:49:53.232593+00:00", "level": "INFO", "event": "http_request", "request_id": "e5d4f2e5b4e0431bb176e97af64891d5", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 75.628}
+{"ts": "2026-11-25T08:49:53.237322+00:00", "level": "INFO", "event": "http_request", "request_id": "db8ed92c48ae46949151c406df6bf8f5", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 55.139}
+{"ts": "2026-11-25T08:49:53.244161+00:00", "level": "INFO", "event": "http_request", "request_id": "52e1a0ba37cc43bc8aa97c4c7e6ad5fb", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 46.308}
+{"ts": "2026-11-25T08:49:53.244468+00:00", "level": "INFO", "event": "http_request", "request_id": "015317d154084572832f81eab23ed1b3", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 71.948}
+{"ts": "2026-11-25T08:49:53.245589+00:00", "level": "INFO", "event": "http_request", "request_id": "24d9955a604c4585954fd4741121b7de", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 47.472}
+{"ts": "2026-11-25T08:49:53.246257+00:00", "level": "INFO", "event": "http_request", "request_id": "4028a27b36c1444ea997a925eed7108d", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 56.675}
+{"ts": "2026-11-25T08:49:53.247835+00:00", "level": "INFO", "event": "http_request", "request_id": "fb1524247836427bad96d96a59c4c4aa", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 52.871}
+{"ts": "2026-11-25T08:49:53.249077+00:00", "level": "INFO", "event": "http_request", "request_id": "48e35c0b58ea4e21af2846b2040c9fe2", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 57.801}
+{"ts": "2026-11-25T08:49:53.253199+00:00", "level": "INFO", "event": "http_request", "request_id": "30fcca092909473ea27febe1da95bad5", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 58.626}
+{"ts": "2026-11-25T08:49:53.255056+00:00", "level": "INFO", "event": "http_request", "request_id": "8377d4e38dc04e5688f7c3ec9628a1ff", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 54.018}
+{"ts": "2026-11-25T08:49:53.259255+00:00", "level": "INFO", "event": "http_request", "request_id": "6155bd1b16d14dfbb69044c971db84a1", "method": "POST", "route": "/ask", "status": 402, "duration_ms": 57.539}
+{"ts": "2026-11-25T08:49:53.259366+00:00", "level": "INFO", "event": "http_request", "request_id": "c024559375584e93b3c589c44223f12a", "method": "POST", "route": "/ask", "status": 200, "duration_ms": 196.28}
+{"ts": "2026-11-25T08:49:53.396124+00:00", "level": "INFO", "event": "http_request", "request_id": "379943b91448454ca616b9391e751408", "method": "POST", "route": "/ask", "status": 200, "duration_ms": 175.604}

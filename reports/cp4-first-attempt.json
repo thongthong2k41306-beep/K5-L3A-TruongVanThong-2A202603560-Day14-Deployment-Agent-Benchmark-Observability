@@ -1,0 +1,79 @@
+{
+  "checkpoint": "CP4",
+  "part": 5,
+  "run_at": "2026-11-25T15:25:36.951369+07:00",
+  "python": "3.12.3",
+  "os_name": "posix",
+  "develop": {
+    "base_url": "http://127.0.0.1:48677",
+    "health": {
+      "method": "GET",
+      "path": "/health",
+      "request_body": null,
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "uptime_seconds": 1.1,
+        "version": "1.0.0",
+        "environment": "development",
+        "timestamp": "2026-11-25T08:25:41.318516+00:00",
+        "checks": {
+          "memory": {
+            "status": "ok",
+            "used_percent": 10.7
+          }
+        }
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:25:40 GMT",
+        "server": "uvicorn",
+        "content-length": "185",
+        "content-type": "application/json",
+        "connection": "close"
+      }
+    },
+    "ready": {
+      "method": "GET",
+      "path": "/ready",
+      "request_body": null,
+      "status": 200,
+      "body": {
+        "ready": true,
+        "in_flight_requests": 1
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:25:40 GMT",
+        "server": "uvicorn",
+        "content-length": "37",
+        "content-type": "application/json",
+        "connection": "close"
+      }
+    },
+    "probe": "Original app.py via runpy; mock delay 1.0s only in test process; source unchanged",
+    "sigterm_sent_after_in_flight_marker": true,
+    "request": {
+      "response": {
+        "method": "POST",
+        "path": "/ask?question=Hello",
+        "request_body": null,
+        "status": 200,
+        "body": {
+          "answer": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé."
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:25:40 GMT",
+          "server": "uvicorn",
+          "content-length": "95",
+          "content-type": "application/json",
+          "connection": "close"
+        }
+      },
+      "duration_seconds": 1.009
+    },
+    "exit_code": 0,
+    "shutdown_seconds_after_sigterm": 1.419,
+    "log": "reports/cp4-graceful.log"
+  },
+  "passed": false,
+  "error": "timed out"
+}

@@ -1,0 +1,163 @@
+{
+  "checkpoint": "CP2",
+  "run_at": "2026-11-25T15:07:14.487469+07:00",
+  "docker_version": "29.9.3",
+  "compose_version": "Docker Compose version v5.7.0",
+  "images": [
+    {
+      "tag": "my-agent:develop",
+      "command": [
+        "docker",
+        "build",
+        "--progress=plain",
+        "-f",
+        "02-docker/develop/Dockerfile",
+        "-t",
+        "my-agent:develop",
+        "."
+      ],
+      "build_seconds": 2.39,
+      "image_id": "sha256:315bc51f366ef809ad51bb41709813c66a71a406566c2888660a2a129f3db389",
+      "size_bytes": 1667775889,
+      "size_mb": 1667.78,
+      "size_mib": 1590.52,
+      "user": "",
+      "cmd": [
+        "python",
+        "app.py"
+      ],
+      "build_log": "reports/cp2-build-develop.log",
+      "runtime": {
+        "base_url": "http://127.0.0.1:60664",
+        "requests": [
+          {
+            "method": "GET",
+            "path": "/health",
+            "request_body": null,
+            "status": 200,
+            "body": {
+              "status": "ok",
+              "uptime_seconds": 0.0,
+              "container": true
+            },
+            "headers": {
+              "date": "Wed, 25 Nov 2026 08:07:17 GMT",
+              "server": "uvicorn",
+              "content-length": "53",
+              "content-type": "application/json",
+              "connection": "close"
+            }
+          },
+          {
+            "method": "POST",
+            "path": "/ask?question=What%20is%20Docker?",
+            "request_body": null,
+            "status": 200,
+            "body": {
+              "answer": "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!"
+            },
+            "headers": {
+              "date": "Wed, 25 Nov 2026 08:07:17 GMT",
+              "server": "uvicorn",
+              "content-length": "103",
+              "content-type": "application/json",
+              "connection": "close"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "tag": "my-agent:advanced",
+      "command": [
+        "docker",
+        "build",
+        "--progress=plain",
+        "-f",
+        "02-docker/production/Dockerfile",
+        "-t",
+        "my-agent:advanced",
+        "."
+      ],
+      "build_seconds": 52.82,
+      "image_id": "sha256:5ebaec71b432a3b38bf482df9d614b10eac7531079c8672663f05165d4625429",
+      "size_bytes": 239815088,
+      "size_mb": 239.82,
+      "size_mib": 228.71,
+      "user": "appuser",
+      "cmd": [
+        "uvicorn",
+        "main:app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000",
+        "--workers",
+        "2"
+      ],
+      "build_log": "reports/cp2-build-production.log",
+      "runtime": {
+        "base_url": "http://127.0.0.1:60727",
+        "requests": [
+          {
+            "method": "GET",
+            "path": "/health",
+            "request_body": null,
+            "status": 200,
+            "body": {
+              "status": "ok",
+              "uptime_seconds": 1.0,
+              "version": "2.0.0",
+              "timestamp": "2026-11-25T08:08:13.976096"
+            },
+            "headers": {
+              "date": "Wed, 25 Nov 2026 08:08:13 GMT",
+              "server": "uvicorn",
+              "content-length": "95",
+              "content-type": "application/json",
+              "connection": "close"
+            }
+          },
+          {
+            "method": "POST",
+            "path": "/ask",
+            "request_body": {
+              "question": "What is Docker?"
+            },
+            "status": 200,
+            "body": {
+              "answer": "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!"
+            },
+            "headers": {
+              "date": "Wed, 25 Nov 2026 08:08:13 GMT",
+              "server": "uvicorn",
+              "content-length": "103",
+              "content-type": "application/json",
+              "connection": "close"
+            }
+          },
+          {
+            "method": "GET",
+            "path": "/ready",
+            "request_body": null,
+            "status": 200,
+            "body": {
+              "ready": true
+            },
+            "headers": {
+              "date": "Wed, 25 Nov 2026 08:08:14 GMT",
+              "server": "uvicorn",
+              "content-length": "14",
+              "content-type": "application/json",
+              "connection": "close"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "size_reduction_percent": 85.62,
+  "docker_images_output": "IMAGE               ID             DISK USAGE   CONTENT SIZE   EXTRA\nmy-agent:advanced   5ebaec71b432        240MB         57.4MB        \nmy-agent:develop    315bc51f366e       1.67GB          426MB",
+  "passed": false,
+  "error": "docker compose -p k5-day14-docker up -d --build --wait --wait-timeout 180\n#1 [internal] load local bake definitions\n#1 reading from stdin 716B done\n#1 DONE 0.0s\n\n#2 [internal] load build definition from Dockerfile\n#2 transferring dockerfile: 3.32kB 0.0s done\n#2 DONE 0.1s\n\n#3 [internal] load metadata for docker.io/library/python:3.11-slim\n#3 DONE 1.2s\n\n#4 [internal] load .dockerignore\n#4 transferring context: 486B 0.1s done\n#4 DONE 0.1s\n\n#5 [builder 1/5] FROM docker.io/library/python:3.11-slim@sha256:61e01f72680f86a5279ad510818ab7b2ee9f049822589d4e34e33e044360356c\n#5 resolve docker.io/library/python:3.11-slim@sha256:61e01f72680f86a5279ad510818ab7b2ee9f049822589d4e34e33e044360356c 0.0s done\n#5 DONE 0.0s\n\n#6 [internal] load build context\n#6 transferring context: 237B 0.2s done\n#6 DONE 0.2s\n\n#7 [builder 3/5] RUN apt-get update && apt-get install -y     gcc     libpq-dev     && rm -rf /var/lib/apt/lists/*\n#7 CACHED\n\n#8 [runtime 6/8] RUN mkdir -p /app/utils\n#8 CACHED\n\n#9 [runtime 2/8] RUN groupadd -r appuser && useradd -r -g appuser appuser\n#9 CACHED\n\n#10 [builder 4/5] COPY 02-docker/production/requirements.txt .\n#10 CACHED\n\n#11 [builder 5/5] RUN pip install --no-cache-dir --user -r requirements.txt\n#11 CACHED\n\n#12 [runtime 7/8] COPY utils/mock_llm.py /app/utils/mock_llm.py\n#12 CACHED\n\n#13 [runtime 3/8] WORKDIR /app\n#13 CACHED\n\n#14 [builder 2/5] WORKDIR /app\n#14 CACHED\n\n#15 [runtime 4/8] COPY --from=builder /root/.local /home/appuser/.local\n#15 CACHED\n\n#16 [runtime 5/8] COPY 02-docker/production/main.py .\n#16 CACHED\n\n#17 [runtime 8/8] RUN chown -R appuser:appuser /app\n#17 CACHED\n\n#18 exporting to image\n#18 exporting layers done\n#18 exporting manifest sha256:3e025d4e65f53676a0f0f39c674ba24912bb53d48fb7dcf2d8051f6fd3d9f0d6 0.0s done\n#18 exporting config sha256:b39f5c5b2b4cd6a0655f00c731db1c283936da24a1194f61fb421ff1bdd8d9df 0.0s done\n#18 exporting attestation manifest sha256:36814c33f1e72401da56c344a6315f8ecf5197eaa5b4c0cbdb96d0099cb5ee97\n#18 exporting attestation manifest sha256:36814c33f1e72401da56c344a6315f8ecf5197eaa5b4c0cbdb96d0099cb5ee97 0.0s done\n#18 exporting manifest list sha256:18f52e26613d7eaed58c5aecf65e275cc1d53175e1154f9b835da6e352cb2c1b 0.0s done\n#18 naming to docker.io/library/k5-day14-docker-agent:latest done\n#18 unpacking to docker.io/library/k5-day14-docker-agent:latest 0.0s done\n#18 DONE 0.2s\n\n#19 resolving provenance for metadata file\n#19 DONE 0.0s\n\ntime=\"2026-11-25T15:08:14+07:00\" level=warning msg=\"/mnt/d/K5-AIThucchien/K5-L3A-TruongVanThong-2A202603560-Day14-Deployment-Agent-Benchmark-Observability/02-docker/production/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion\"\n Image qdrant/qdrant:v1.9.0 Pulling \n Image nginx:alpine Pulling \n Image redis:7-alpine Pulling \n 13808c22b207 Pulling fs layer 0B\n 4f4fb700ef54 Pulling fs layer 0B\n 7e438f701ce0 Pulling fs layer 0B\n d654115ed966 Pulling fs layer 0B\n b620798c48a6 Pulling fs layer 0B\n 3cdc66ab1ff8 Pulling fs layer 0B\n 0358ec7769a4 Pulling fs layer 0B\n 287bca830df3 Pulling fs layer 0B\n 4f4fb700ef54 Pulling fs layer 0B\n 4a603bc2424c Pulling fs layer 0B\n 6c0bde7286d0 Pulling fs layer 0B\n 0e50696bc150 Pulling fs layer 0B\n 4f4fb700ef54 Pulling fs layer 0B\n 710f3da1112f Pulling fs layer 0B\n f55179448640 Pulling fs layer 0B\n ad83137ff0b2 Pulling fs layer 0B\n 4f4fb700ef54 Downloading 32B\n 4f4fb700ef54 Downloading 32B\n d654115ed966 Downloading 96B\n 4f4fb700ef54 Download complete 0B\n d654115ed966 Download complete 0B\n 13808c22b207 Downloading 1.049MB\n 4f4fb700ef54 Download complete 0B\n 13808c22b207 Downloading 1.049MB\n 13808c22b207 Downloading 1.049MB\n 13808c22b207 Downloading 1.049MB\n 13808c22b207 Downloading 2.097MB\n 13808c22b207 Downloading 2.097MB\n b620798c48a6 Downloading 1.049MB\n b620798c48a6 Downloading 1.049MB\n 13808c22b207 Downloading 2.097MB\n 13808c22b207 Downloading 3.146MB\n b620798c48a6 Downloading 2.097MB\n b620798c48a6 Downloading 2.097MB\n 13808c22b207 Downloading 3.146MB\n 7e438f701ce0 Downloading 1.049MB\n b620798c48a6 Downloading 3.146MB\n 13808c22b207 Downloading 3.146MB\n 7e438f701ce0 Downloading 1.049MB\n b620798c48a6 Downloading 3.146MB\n 13808c22b207 Downloading 3.146MB\n 7e438f701ce0 Downloading 2.097MB\n 13808c22b207 Downloading 3.146MB\n 7e438f701ce0 Downloading 2.097MB\n b620798c48a6 Downloading 3.146MB\n 13808c22b207 Downloading 4.194MB\n 7e438f701ce0 Downloading 2.097MB\n b620798c48a6 Downloading 4.194MB\n b620798c48a6 Downloading 4.194MB\n 13808c22b207 Downloading 4.194MB\n 7e438f701ce0 Downloading 2.097MB\n 13808c22b207 Downloading 4.194MB\n 7e438f701ce0 Downloading 3.567MB\n b620798c48a6 Downloading 5.243MB\n 7e438f701ce0 Download complete 0B\n b620798c48a6 Downloading 5.243MB\n 13808c22b207 Downloading 4.194MB\n b620798c48a6 Downloading 5.243MB\n 13808c22b207 Downloading 4.194MB\n 13808c22b207 Downloading 4.194MB\n b620798c48a6 Downloading 6.291MB\n 13808c22b207 Downloading 5.243MB\n b620798c48a6 Downloading 6.291MB\n b620798c48a6 Downloading 6.291MB\n 13808c22b207 Downloading 5.243MB\n b620798c48a6 Downloading 7.34MB\n 13808c22b207 Downloading 5.243MB\n 13808c22b207 Downloading 5.243MB\n b620798c48a6 Downloading 7.34MB\n 13808c22b207 Downloading 5.243MB\n b620798c48a6 Downloading 7.34MB\n b620798c48a6 Downloading 8.389MB\n 13808c22b207 Downloading 5.243MB\n 287bca830df3 Downloading 1.049MB\n 13808c22b207 Downloading 5.243MB\n b620798c48a6 Downloading 8.389MB\n 287bca830df3 Downloading 1.049MB\n 13808c22b207 Downloading 6.291MB\n b620798c48a6 Downloading 9.437MB\n b620798c48a6 Downloading 9.437MB\n 287bca830df3 Downloading 1.049MB\n 13808c22b207 Downloading 6.291MB\n b620798c48a6 Downloading 9.437MB\n 287bca830df3 Downloading 1.049MB\n 13808c22b207 Downloading 6.291MB\n 287bca830df3 Download complete 0B\n 13808c22b207 Downloading 6.291MB\n b620798c48a6 Downloading 10.49MB\n 13808c22b207 Downloading 6.291MB\n b620798c48a6 Downloading 10.49MB\n b620798c48a6 Downloading 10.49MB\n 13808c22b207 Downloading 6.291MB\n 13808c22b207 Downloading 6.291MB\n b620798c48a6 Downloading 11.53MB\n 13808c22b207 Downloading 6.291MB\n b620798c48a6 Downloading 11.53MB\n 0358ec7769a4 Download complete 0B\n b620798c48a6 Downloading 12.58MB\n 13808c22b207 Downloading 6.291MB\n 13808c22b207 Downloading 7.34MB\n b620798c48a6 Downloading 12.58MB\n b620798c48a6 Downloading 12.58MB\n 13808c22b207 Downloading 7.34MB\n 13808c22b207 Downloading 7.34MB\n b620798c48a6 Downloading 13.63MB\n 3cdc66ab1ff8 Download complete 0B\n b620798c48a6 Downloading 13.63MB\n 13808c22b207 Downloading 7.34MB\n 13808c22b207 Downloading 7.34MB\n b620798c48a6 Downloading 14.68MB\n b620798c48a6 Downloading 14.68MB\n 13808c22b207 Downloading 7.34MB\n 13808c22b207 Downloading 7.34MB\n b620798c48a6 Downloading 14.68MB\n 13808c22b207 Downloading 7.34MB\n b620798c48a6 Downloading 15.73MB\n b620798c48a6 Downloading 15.73MB\n 13808c22b207 Downloading 7.34MB\n 13808c22b207 Downloading 8.389MB\n b620798c48a6 Downloading 15.73MB\n b620798c48a6 Downloading 16.78MB\n 13808c22b207 Downloading 8.389MB\n ad83137ff0b2 Download complete 0B\n b620798c48a6 Downloading 17.83MB\n 13808c22b207 Downloading 8.389MB\n b620798c48a6 Downloading 17.83MB\n 13808c22b207 Downloading 8.389MB\n 13808c22b207 Downloading 8.389MB\n b620798c48a6 Downloading 18.87MB\n 13808c22b207 Downloading 8.389MB\n b620798c48a6 Downloading 18.87MB\n 0e50696bc150 Download complete 0B\n 13808c22b207 Downloading 8.389MB\n b620798c48a6 Downloading 18.87MB\n 13808c22b207 Downloading 8.389MB\n b620798c48a6 Downloading 19.92MB\n b620798c48a6 Downloading 20.97MB\n 13808c22b207 Downloading 8.389MB\n 13808c22b207 Downloading 8.389MB\n b620798c48a6 Downloading 20.97MB\n 13808c22b207 Downloading 9.437MB\n b620798c48a6 Downloading 20.97MB\n b620798c48a6 Downloading 22.02MB\n 13808c22b207 Downloading 9.437MB\n 13808c22b207 Downloading 9.437MB\n b620798c48a6 Downloading 23.07MB\n b620798c48a6 Downloading 23.07MB\n 13808c22b207 Downloading 9.437MB\n 13808c22b207 Downloading 9.437MB\n b620798c48a6 Downloading 23.07MB\n b620798c48a6 Downloading 23.07MB\n 13808c22b207 Downloading 9.437MB\n b620798c48a6 Downloading 23.07MB\n 13808c22b207 Downloading 9.437MB\n b620798c48a6 Download complete 0B\n 13808c22b207 Downloading 9.437MB\n 13808c22b207 Downloading 9.437MB\n 13808c22b207 Downloading 9.437MB\n 13808c22b207 Downloading 9.437MB\n 4a603bc2424c Download complete 0B\n f55179448640 Downloading 1.049MB\n 13808c22b207 Downloading 9.437MB\n f55179448640 Downloading 1.049MB\n 13808c22b207 Downloading 9.437MB\n f55179448640 Downloading 1.049MB\n 13808c22b207 Downloading 10.49MB\n f55179448640 Downloading 1.049MB\n 13808c22b207 Downloading 10.49MB\n f55179448640 Downloading 1.049MB\n 13808c22b207 Downloading 10.49MB\n f55179448640 Downloading 1.049MB\n 13808c22b207 Downloading 10.49MB\n f55179448640 Downloading 1.049MB\n 13808c22b207 Downloading 10.49MB\n f55179448640 Downloading 1.049MB\n 13808c22b207 Downloading 10.49MB\n f55179448640 Downloading 2.097MB\n 13808c22b207 Downloading 10.49MB\n 710f3da1112f Downloading 1.049MB\n f55179448640 Downloading 2.097MB\n 13808c22b207 Downloading 10.49MB\n 710f3da1112f Downloading 1.049MB\n f55179448640 Downloading 2.097MB\n 13808c22b207 Downloading 10.49MB\n f55179448640 Downloading 2.097MB\n 710f3da1112f Downloading 1.049MB\n 13808c22b207 Downloading 10.49MB\n 710f3da1112f Downloading 1.049MB\n f55179448640 Downloading 2.097MB\n 13808c22b207 Downloading 11.53MB\n f55179448640 Downloading 2.097MB\n 710f3da1112f Downloading 1.049MB\n 13808c22b207 Downloading 11.53MB\n f55179448640 Downloading 2.097MB\n 710f3da1112f Downloading 1.049MB\n 13808c22b207 Downloading 11.53MB\n f55179448640 Downloading 2.097MB\n 710f3da1112f Downloading 1.049MB\n 13808c22b207 Downloading 11.53MB\n f55179448640 Downloading 2.097MB\n 710f3da1112f Downloading 2.097MB\n 13808c22b207 Downloading 11.53MB\n 710f3da1112f Downloading 2.097MB\n f55179448640 Downloading 2.097MB\n 13808c22b207 Downloading 11.53MB\n 710f3da1112f Downloading 2.097MB\n f55179448640 Downloading 3.146MB\n 13808c22b207 Downloading 11.53MB\n 710f3da1112f Downloading 2.097MB\n f55179448640 Downloading 3.146MB\n 13808c22b207 Downloading 11.53MB\n f55179448640 Downloading 3.146MB\n 710f3da1112f Downloading 2.097MB\n 13808c22b207 Downloading 11.53MB\n 710f3da1112f Downloading 3.146MB\n f55179448640 Downloading 3.146MB\n 13808c22b207 Downloading 11.53MB\n f55179448640 Downloading 3.146MB\n 710f3da1112f Downloading 3.146MB\n 13808c22b207 Downloading 11.53MB\n f55179448640 Downloading 3.146MB\n 710f3da1112f Downloading 3.146MB\n 13808c22b207 Downloading 11.53MB\n f55179448640 Downloading 3.146MB\n 710f3da1112f Download complete 0B\n 13808c22b207 Downloading 12.58MB\n 710f3da1112f Extracting 1B\n f55179448640 Downloading 4.194MB\n 710f3da1112f Extracting 1B\n 13808c22b207 Downloading 12.58MB\n f55179448640 Downloading 4.194MB\n 13808c22b207 Downloading 12.58MB\n 710f3da1112f Extracting 1B\n f55179448640 Downloading 4.194MB\n 6c0bde7286d0 Download complete 0B\n 13808c22b207 Downloading 12.58MB\n 710f3da1112f Extracting 1B\n f55179448640 Downloading 4.194MB\n 710f3da1112f Extracting 1B\n 13808c22b207 Downloading 12.58MB\n f55179448640 Downloading 4.194MB\n 13808c22b207 Downloading 12.58MB\n 710f3da1112f Extracting 1B\n f55179448640 Downloading 5.243MB\n 710f3da1112f Extracting 1B\n 13808c22b207 Downloading 12.58MB\n f55179448640 Downloading 5.243MB\n 13808c22b207 Downloading 12.58MB\n 710f3da1112f Pull complete 0B\n 6c0bde7286d0 Pull complete 0B\n f55179448640 Downloading 5.243MB\n ad83137ff0b2 Extracting 1B\n 13808c22b207 Downloading 12.58MB\n f55179448640 Downloading 5.243MB\n 13808c22b207 Downloading 12.58MB\n ad83137ff0b2 Pull complete 0B\n e5f8fe67c1e1 Pulling fs layer 0B\n 85b05bfd25bc Pulling fs layer 0B\n 272cbe758287 Pulling fs layer 0B\n fbbe454312b9 Pulling fs layer 0B\n 3623869d224d Pulling fs layer 0B\n 96001c9779a1 Pulling fs layer 0B\n e9820988621b Pulling fs layer 0B\n 881fc932939e Pulling fs layer 0B\n f55179448640 Downloading 5.243MB\n 13808c22b207 Downloading 12.58MB\n f55179448640 Downloading 5.243MB\n 13808c22b207 Downloading 12.58MB\n f55179448640 Downloading 5.243MB\n 13808c22b207 Downloading 12.58MB\n f55179448640 Downloading 5.243MB\n 13808c22b207 Downloading 12.58MB\n f55179448640 Downloading 6.291MB\n 13808c22b207 Downloading 12.58MB\n f55179448640 Downloading 6.291MB\n 13808c22b207 Downloading 13.63MB\n f55179448640 Downloading 6.291MB\n 13808c22b207 Downloading 13.63MB\n f55179448640 Downloading 6.291MB\n 13808c22b207 Downloading 13.63MB\n f55179448640 Downloading 6.291MB\n 13808c22b207 Downloading 13.63MB\n fa74bfc17da9 Download complete 0B\n f55179448640 Downloading 7.34MB\n 13808c22b207 Downloading 13.63MB\n f55179448640 Downloading 7.34MB\n 13808c22b207 Downloading 13.63MB\n f55179448640 Downloading 7.34MB\n 13808c22b207 Downloading 13.63MB\n f55179448640 Downloading 7.34MB\n 13808c22b207 Downloading 13.63MB\n f55179448640 Downloading 7.34MB\n 13808c22b207 Downloading 13.63MB\n f55179448640 Downloading 7.34MB\n 13808c22b207 Downloading 13.63MB\n dfed3a5d50b9 Download complete 0B\n f55179448640 Downloading 7.34MB\n 13808c22b207 Downloading 13.63MB\n f55179448640 Downloading 8.389MB\n 13808c22b207 Downloading 13.63MB\n f55179448640 Downloading 8.389MB\n 13808c22b207 Downloading 13.63MB\n f55179448640 Downloading 8.389MB\n 13808c22b207 Downloading 13.63MB\n f55179448640 Downloading 8.389MB\n 13808c22b207 Downloading 14.68MB\n f55179448640 Downloading 9.437MB\n 13808c22b207 Downloading 14.68MB\n f55179448640 Downloading 9.437MB\n 13808c22b207 Downloading 14.68MB\n f55179448640 Downloading 9.437MB\n 13808c22b207 Downloading 14.68MB\n f55179448640 Downloading 9.437MB\n 13808c22b207 Downloading 14.68MB\n f55179448640 Downloading 9.437MB\n 13808c22b207 Downloading 14.68MB\n f55179448640 Downloading 10.49MB\n 5864e364268f Download complete 0B\n 13808c22b207 Downloading 14.68MB\n f55179448640 Downloading 10.49MB\n 13808c22b207 Downloading 14.68MB\n f55179448640 Downloading 10.49MB\n 13808c22b207 Downloading 14.68MB\n f55179448640 Downloading 10.49MB\n 13808c22b207 Downloading 14.68MB\n f55179448640 Downloading 11.53MB\n 13808c22b207 Downloading 15.73MB\n f55179448640 Downloading 11.53MB\n 13808c22b207 Downloading 15.73MB\n f55179448640 Downloading 11.53MB\n 13808c22b207 Downloading 15.73MB\n f55179448640 Downloading 12.42MB\n 13808c22b207 Downloading 15.73MB\n f55179448640 Download complete 0B\n f55179448640 Extracting 1B\n 13808c22b207 Downloading 15.73MB\n f55179448640 Extracting 1B\n 13808c22b207 Downloading 15.73MB\n 4f4fb700ef54 Pull complete 0B\n 0e50696bc150 Pull complete 0B\n 13808c22b207 Downloading 15.73MB\n f55179448640 Pull complete 0B\n 4a603bc2424c Pull complete 0B\n Image redis:7-alpine Pulled \n 13808c22b207 Downloading 15.73MB\n 13808c22b207 Downloading 15.73MB\n 13808c22b207 Downloading 15.73MB\n 13808c22b207 Downloading 15.73MB\n 272cbe758287 Downloading 1.049MB\n 13808c22b207 Downloading 15.73MB\n 272cbe758287 Downloading 1.049MB\n 13808c22b207 Downloading 15.73MB\n 272cbe758287 Downloading 1.049MB\n 13808c22b207 Downloading 16.78MB\n 272cbe758287 Downloading 1.049MB\n 13808c22b207 Downloading 16.78MB\n 272cbe758287 Downloading 1.049MB\n 13808c22b207 Downloading 16.78MB\n 272cbe758287 Downloading 2.097MB\n 13808c22b207 Downloading 16.78MB\n 272cbe758287 Downloading 2.097MB\n e5f8fe67c1e1 Downloading 1.049MB\n 13808c22b207 Downloading 16.78MB\n e5f8fe67c1e1 Downloading 1.049MB\n 272cbe758287 Downloading 2.097MB\n 13808c22b207 Downloading 17.83MB\n 272cbe758287 Downloading 2.097MB\n e5f8fe67c1e1 Downloading 1.049MB\n 13808c22b207 Downloading 17.83MB\n e5f8fe67c1e1 Downloading 1.049MB\n 272cbe758287 Downloading 3.146MB\n 13808c22b207 Downloading 17.83MB\n e5f8fe67c1e1 Downloading 1.049MB\n 272cbe758287 Downloading 3.146MB\n 13808c22b207 Downloading 17.83MB\n e5f8fe67c1e1 Downloading 2.097MB\n 272cbe758287 Downloading 3.146MB\n 13808c22b207 Downloading 17.83MB\n e5f8fe67c1e1 Downloading 2.097MB\n 272cbe758287 Downloading 3.146MB\n 13808c22b207 Downloading 17.83MB\n e5f8fe67c1e1 Downloading 2.097MB\n 272cbe758287 Download complete 0B\n 13808c22b207 Downloading 17.83MB\n e5f8fe67c1e1 Downloading 2.097MB\n 13808c22b207 Downloading 17.83MB\n e5f8fe67c1e1 Downloading 2.097MB\n 13808c22b207 Downloading 17.83MB\n e5f8fe67c1e1 Downloading 3.146MB\n 85b05bfd25bc Download complete 0B\n 13808c22b207 Downloading 17.83MB\n e5f8fe67c1e1 Downloading 3.146MB\n 13808c22b207 Downloading 17.83MB\n e5f8fe67c1e1 Downloading 3.146MB\n 13808c22b207 Downloading 17.83MB\n e5f8fe67c1e1 Downloading 3.146MB\n 96001c9779a1 Downloading 964B\n 13808c22b207 Downloading 17.83MB\n e5f8fe67c1e1 Downloading 4.194MB\n 96001c9779a1 Download complete 0B\n 13808c22b207 Downloading 17.83MB\n e5f8fe67c1e1 Downloading 4.194MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 4.194MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 4.194MB\n fbbe454312b9 Download complete 0B\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 5.243MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 5.243MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 5.243MB\n 3623869d224d Download complete 0B\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 5.243MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 6.291MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 6.291MB\n 13808c22b207 Downloading 18.87MB\n e9820988621b Download complete 0B\n e5f8fe67c1e1 Downloading 6.291MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 6.291MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 7.34MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 7.34MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 7.34MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 7.34MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 8.389MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 8.389MB\n 13808c22b207 Downloading 18.87MB\n e5f8fe67c1e1 Downloading 8.389MB\n 13808c22b207 Downloading 18.87MB\n 881fc932939e Downloading 1.049MB\n e5f8fe67c1e1 Downloading 9.437MB\n 13808c22b207 Downloading 18.87MB\n 881fc932939e Downloading 1.049MB\n e5f8fe67c1e1 Downloading 9.437MB\n 13808c22b207 Downloading 18.87MB\n 881fc932939e Downloading 1.049MB\n e5f8fe67c1e1 Downloading 9.437MB\n 13808c22b207 Downloading 19.92MB\n 881fc932939e Downloading 2.097MB\n e5f8fe67c1e1 Downloading 10.49MB\n 13808c22b207 Downloading 19.92MB\n 881fc932939e Downloading 2.097MB\n e5f8fe67c1e1 Downloading 10.49MB\n 13808c22b207 Downloading 19.92MB\n 881fc932939e Downloading 2.097MB\n e5f8fe67c1e1 Downloading 10.49MB\n 13808c22b207 Downloading 19.92MB\n e5f8fe67c1e1 Downloading 11.53MB\n 881fc932939e Downloading 2.097MB\n 13808c22b207 Downloading 19.92MB\n 881fc932939e Downloading 3.146MB\n e5f8fe67c1e1 Downloading 11.53MB\n 13808c22b207 Downloading 19.92MB\n e5f8fe67c1e1 Downloading 11.53MB\n 881fc932939e Downloading 3.146MB\n 13808c22b207 Downloading 19.92MB\n 881fc932939e Downloading 3.146MB\n e5f8fe67c1e1 Downloading 11.53MB\n 13808c22b207 Downloading 19.92MB\n 881fc932939e Downloading 3.854MB\n e5f8fe67c1e1 Downloading 12.58MB\n 13808c22b207 Downloading 19.92MB\n 881fc932939e Download complete 0B\n e5f8fe67c1e1 Downloading 12.58MB\n 881fc932939e Extracting 1B\n 13808c22b207 Downloading 19.92MB\n e5f8fe67c1e1 Downloading 13.63MB\n 881fc932939e Extracting 1B\n 13808c22b207 Downloading 19.92MB\n e5f8fe67c1e1 Downloading 13.63MB\n 881fc932939e Extracting 1B\n 13808c22b207 Downloading 19.92MB\n e5f8fe67c1e1 Downloading 13.63MB\n 881fc932939e Extracting 1B\n 13808c22b207 Downloading 19.92MB\n e5f8fe67c1e1 Downloading 14.68MB\n 272cbe758287 Extracting 1B\n 881fc932939e Pull complete 0B\n 13808c22b207 Downloading 19.92MB\n e5f8fe67c1e1 Downloading 14.68MB\n 272cbe758287 Pull complete 0B\n 96001c9779a1 Extracting 1B\n fbbe454312b9 Pull complete 0B\n 13808c22b207 Downloading 19.92MB\n e5f8fe67c1e1 Downloading 14.68MB\n 85b05bfd25bc Pull complete 0B\n 96001c9779a1 Pull complete 0B\n 3623869d224d Pull complete 0B\n e9820988621b Pull complete 0B\n 13808c22b207 Downloading 19.92MB\n e5f8fe67c1e1 Downloading 15.73MB\n d970fb760bb2 Download complete 0B\n 13808c22b207 Downloading 19.92MB\n e5f8fe67c1e1 Downloading 15.73MB\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Downloading 16.78MB\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Downloading 16.78MB\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Downloading 17.83MB\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Downloading 17.83MB\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Downloading 17.83MB\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Downloading 18.87MB\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Downloading 18.87MB\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Downloading 18.87MB\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Downloading 19.92MB\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Downloading 19.92MB\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Downloading 19.92MB\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Downloading 20.54MB\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Download complete 0B\n e5f8fe67c1e1 Extracting 1B\n 13808c22b207 Downloading 20.97MB\n 3872ed807ade Download complete 0B\n e5f8fe67c1e1 Extracting 1B\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Extracting 1B\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Extracting 1B\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Extracting 1B\n 13808c22b207 Downloading 20.97MB\n e5f8fe67c1e1 Pull complete 0B\n Image nginx:alpine Pulled \n 13808c22b207 Downloading 20.97MB\n 13808c22b207 Downloading 20.97MB\n 13808c22b207 Downloading 20.97MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 22.02MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 23.07MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 24.12MB\n 13808c22b207 Downloading 25.17MB\n 13808c22b207 Downloading 25.17MB\n 13808c22b207 Downloading 25.17MB\n 13808c22b207 Downloading 25.17MB\n 13808c22b207 Downloading 25.17MB\n 13808c22b207 Downloading 25.17MB\n 13808c22b207 Downloading 25.17MB\n 13808c22b207 Downloading 25.17MB\n 13808c22b207 Downloading 25.17MB\n 13808c22b207 Downloading 25.17MB\n 13808c22b207 Downloading 25.17MB\n 13808c22b207 Downloading 26.21MB\n 13808c22b207 Downloading 26.21MB\n 13808c22b207 Downloading 26.21MB\n 13808c22b207 Downloading 26.21MB\n 13808c22b207 Downloading 26.21MB\n 13808c22b207 Downloading 26.21MB\n 13808c22b207 Downloading 26.21MB\n 13808c22b207 Downloading 26.21MB\n 13808c22b207 Downloading 26.21MB\n 13808c22b207 Downloading 26.21MB\n 13808c22b207 Downloading 26.21MB\n 13808c22b207 Downloading 26.21MB\n 13808c22b207 Downloading 27.26MB\n 13808c22b207 Downloading 27.26MB\n 13808c22b207 Downloading 27.26MB\n 13808c22b207 Downloading 27.26MB\n 13808c22b207 Downloading 27.26MB\n 13808c22b207 Downloading 27.26MB\n 13808c22b207 Downloading 27.26MB\n 13808c22b207 Downloading 27.26MB\n 13808c22b207 Downloading 27.26MB\n 13808c22b207 Downloading 27.26MB\n 13808c22b207 Downloading 27.26MB\n 13808c22b207 Downloading 28.31MB\n 13808c22b207 Downloading 28.31MB\n 13808c22b207 Downloading 28.31MB\n 13808c22b207 Downloading 28.31MB\n 13808c22b207 Downloading 28.31MB\n 13808c22b207 Downloading 28.31MB\n 13808c22b207 Downloading 28.31MB\n 13808c22b207 Downloading 29.13MB\n 13808c22b207 Download complete 0B\n 13808c22b207 Extracting 1B\n 13808c22b207 Extracting 1B\n 13808c22b207 Extracting 1B\n 13808c22b207 Extracting 1B\n 13808c22b207 Extracting 1B\n 13808c22b207 Extracting 1B\n 13808c22b207 Extracting 1B\n 13808c22b207 Extracting 1B\n 7e438f701ce0 Extracting 1B\n 13808c22b207 Pull complete 0B\n d654115ed966 Pull complete 0B\n 7e438f701ce0 Pull complete 0B\n b620798c48a6 Extracting 1B\n b620798c48a6 Extracting 1B\n b620798c48a6 Extracting 1B\n b620798c48a6 Extracting 1B\n 0358ec7769a4 Pull complete 0B\n 3cdc66ab1ff8 Pull complete 0B\n b620798c48a6 Pull complete 0B\n 4f4fb700ef54 Extracting 1B\n 287bca830df3 Pull complete 0B\n 4f4fb700ef54 Pull complete 0B\n Image qdrant/qdrant:v1.9.0 Pulled \n Image k5-day14-docker-agent Building \n Image k5-day14-docker-agent Built \n Network k5-day14-docker_internal Creating \n Network k5-day14-docker_internal Creating \n Volume k5-day14-docker_qdrant_data Creating \n Volume k5-day14-docker_qdrant_data Creating \n Volume k5-day14-docker_redis_data Creating \n Volume k5-day14-docker_redis_data Creating \n Volume k5-day14-docker_redis_data Created \n Volume k5-day14-docker_redis_data Created \n Volume k5-day14-docker_qdrant_data Created \n Volume k5-day14-docker_qdrant_data Created \n Network k5-day14-docker_internal Created \n Network k5-day14-docker_internal Created \n Container k5-day14-docker-redis-1 Creating \n Container k5-day14-docker-qdrant-1 Creating \n Container k5-day14-docker-qdrant-1 Created \n Container k5-day14-docker-redis-1 Created \n Container k5-day14-docker-agent-1 Creating \n Container k5-day14-docker-agent-1 Created \n Container k5-day14-docker-nginx-1 Creating \n Container k5-day14-docker-nginx-1 Created \n Container k5-day14-docker-qdrant-1 Starting \n Container k5-day14-docker-redis-1 Starting \n Container k5-day14-docker-qdrant-1 Started \n Container k5-day14-docker-qdrant-1 Waiting \n Container k5-day14-docker-redis-1 Started \n Container k5-day14-docker-redis-1 Waiting \n Container k5-day14-docker-qdrant-1 Healthy \n Container k5-day14-docker-redis-1 Healthy \n Container k5-day14-docker-agent-1 Starting \n Container k5-day14-docker-agent-1 Started \n Container k5-day14-docker-nginx-1 Starting \n Container k5-day14-docker-nginx-1 Error response from daemon: ports are not available: exposing port TCP 0.0.0.0:80 -> 127.0.0.1:0: /forwards/expose returned unexpected status: 500 \nError response from daemon: ports are not available: exposing port TCP 0.0.0.0:80 -> 127.0.0.1:0: /forwards/expose returned unexpected status: 500\n"
+}

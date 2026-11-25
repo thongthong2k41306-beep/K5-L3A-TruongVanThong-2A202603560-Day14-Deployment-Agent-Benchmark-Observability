@@ -1,0 +1,43 @@
+{
+  "checkpoint": "CP5",
+  "part": 6,
+  "run_at": "2026-11-25T15:54:45.393638+07:00",
+  "python": "3.12.3",
+  "os_name": "posix",
+  "protected_files": [
+    {
+      "path": "06-lab-complete/check_production_ready.py",
+      "sha256": "73e4a70c13ba1127ffd7fafe14d2b9f6ce6ec016dccafd8ca3d416cf8817268a",
+      "matches_git_source": true
+    },
+    {
+      "path": "06-lab-complete/benchmark-observability/develop/eval/golden_dataset.jsonl",
+      "sha256": "22e672344ef72779959f3cf480391cef247b2f8ce86415010ddea9b315e959ec",
+      "matches_git_source": true
+    }
+  ],
+  "static": {
+    "command": [
+      "python",
+      "check_production_ready.py",
+      "--static-only"
+    ],
+    "exit_code": 1,
+    "log": "reports/cp5-static.txt",
+    "criteria_passed": 3,
+    "checks_passed": 28,
+    "checks_total": 28
+  },
+  "production-ready": {
+    "command": [
+      "python",
+      "check_production_ready.py"
+    ],
+    "exit_code": 0,
+    "log": "reports/cp5-production-ready.txt",
+    "criteria_passed": 12,
+    "checks_passed": 43,
+    "checks_total": 43
+  },
+  "passed": true
+}

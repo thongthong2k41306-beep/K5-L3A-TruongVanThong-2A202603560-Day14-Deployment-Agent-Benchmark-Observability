@@ -1,0 +1,732 @@
+{
+  "checkpoint": "CP4",
+  "part": 5,
+  "run_at": "2026-11-25T15:32:54.319828+07:00",
+  "python": "3.12.3",
+  "os_name": "posix",
+  "develop": {
+    "base_url": "http://127.0.0.1:43725",
+    "health": {
+      "method": "GET",
+      "path": "/health",
+      "request_body": null,
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "uptime_seconds": 1.2,
+        "version": "1.0.0",
+        "environment": "development",
+        "timestamp": "2026-11-25T08:32:58.691689+00:00",
+        "checks": {
+          "memory": {
+            "status": "ok",
+            "used_percent": 11.6
+          }
+        }
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:32:58 GMT",
+        "server": "uvicorn",
+        "content-length": "185",
+        "content-type": "application/json",
+        "connection": "close"
+      }
+    },
+    "ready": {
+      "method": "GET",
+      "path": "/ready",
+      "request_body": null,
+      "status": 200,
+      "body": {
+        "ready": true,
+        "in_flight_requests": 1
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:32:58 GMT",
+        "server": "uvicorn",
+        "content-length": "37",
+        "content-type": "application/json",
+        "connection": "close"
+      }
+    },
+    "probe": "Original app.py via runpy; mock delay 1.0s only in test process; source unchanged",
+    "sigterm_sent_after_in_flight_marker": true,
+    "request": {
+      "response": {
+        "method": "POST",
+        "path": "/ask?question=Hello",
+        "request_body": null,
+        "status": 200,
+        "body": {
+          "answer": "Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận."
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:32:58 GMT",
+          "server": "uvicorn",
+          "content-length": "103",
+          "content-type": "application/json",
+          "connection": "close"
+        }
+      },
+      "duration_seconds": 1.028
+    },
+    "exit_code": 0,
+    "shutdown_seconds_after_sigterm": 1.217,
+    "log": "reports/cp4-graceful.log"
+  },
+  "production": {
+    "project": "k5-day14-scaling",
+    "base_url": "http://127.0.0.1:8080",
+    "agent_count": 3,
+    "services": [
+      {
+        "Name": "k5-day14-scaling-agent-1",
+        "Service": "agent",
+        "Image": "k5-day14-scaling-agent",
+        "State": "running",
+        "Health": "healthy",
+        "Ports": "8000/tcp"
+      },
+      {
+        "Name": "k5-day14-scaling-agent-2",
+        "Service": "agent",
+        "Image": "k5-day14-scaling-agent",
+        "State": "running",
+        "Health": "healthy",
+        "Ports": "8000/tcp"
+      },
+      {
+        "Name": "k5-day14-scaling-agent-3",
+        "Service": "agent",
+        "Image": "k5-day14-scaling-agent",
+        "State": "running",
+        "Health": "healthy",
+        "Ports": "8000/tcp"
+      },
+      {
+        "Name": "k5-day14-scaling-nginx-1",
+        "Service": "nginx",
+        "Image": "nginx:alpine",
+        "State": "running",
+        "Health": "",
+        "Ports": "0.0.0.0:8080->80/tcp, [::]:8080->80/tcp"
+      },
+      {
+        "Name": "k5-day14-scaling-redis-1",
+        "Service": "redis",
+        "Image": "redis:7-alpine",
+        "State": "running",
+        "Health": "healthy",
+        "Ports": "6379/tcp"
+      }
+    ],
+    "health_checks": [
+      {
+        "method": "GET",
+        "path": "/health",
+        "request_body": null,
+        "status": 200,
+        "body": {
+          "status": "ok",
+          "instance_id": "instance-7bfd29",
+          "uptime_seconds": 4.7,
+          "storage": "redis",
+          "redis_connected": true
+        },
+        "headers": {
+          "Server": "nginx/1.31.10",
+          "Date": "Wed, 25 Nov 2026 08:33:23 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "109",
+          "Connection": "close",
+          "X-Served-By": "172.19.0.4:8000"
+        }
+      },
+      {
+        "method": "GET",
+        "path": "/ready",
+        "request_body": null,
+        "status": 200,
+        "body": {
+          "ready": true,
+          "instance": "instance-ca9b2b"
+        },
+        "headers": {
+          "Server": "nginx/1.31.10",
+          "Date": "Wed, 25 Nov 2026 08:33:23 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "43",
+          "Connection": "close",
+          "X-Served-By": "172.19.0.3:8000"
+        }
+      }
+    ],
+    "original_script_output": "reports/cp4-stateless.txt",
+    "session_id": "940606fc-e9bf-434b-9938-662871be7381",
+    "served_by_first_five": [
+      "instance-ccb811",
+      "instance-7bfd29",
+      "instance-ca9b2b",
+      "instance-ccb811",
+      "instance-7bfd29"
+    ],
+    "original_history": {
+      "method": "GET",
+      "path": "/chat/940606fc-e9bf-434b-9938-662871be7381/history",
+      "request_body": null,
+      "status": 200,
+      "body": {
+        "session_id": "940606fc-e9bf-434b-9938-662871be7381",
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is Docker?",
+            "timestamp": "2026-11-25T08:33:23.792310+00:00"
+          },
+          {
+            "role": "assistant",
+            "content": "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!",
+            "timestamp": "2026-11-25T08:33:23.914309+00:00"
+          },
+          {
+            "role": "user",
+            "content": "Why do we need containers?",
+            "timestamp": "2026-11-25T08:33:23.921844+00:00"
+          },
+          {
+            "role": "assistant",
+            "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+            "timestamp": "2026-11-25T08:33:24.032686+00:00"
+          },
+          {
+            "role": "user",
+            "content": "What is Kubernetes?",
+            "timestamp": "2026-11-25T08:33:24.036704+00:00"
+          },
+          {
+            "role": "assistant",
+            "content": "Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.",
+            "timestamp": "2026-11-25T08:33:24.181481+00:00"
+          },
+          {
+            "role": "user",
+            "content": "How does load balancing work?",
+            "timestamp": "2026-11-25T08:33:24.188054+00:00"
+          },
+          {
+            "role": "assistant",
+            "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+            "timestamp": "2026-11-25T08:33:24.339166+00:00"
+          },
+          {
+            "role": "user",
+            "content": "What is Redis used for?",
+            "timestamp": "2026-11-25T08:33:24.347499+00:00"
+          },
+          {
+            "role": "assistant",
+            "content": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.",
+            "timestamp": "2026-11-25T08:33:24.487104+00:00"
+          }
+        ],
+        "count": 10
+      },
+      "headers": {
+        "Server": "nginx/1.31.10",
+        "Date": "Wed, 25 Nov 2026 08:33:24 GMT",
+        "Content-Type": "application/json",
+        "Content-Length": "1462",
+        "Connection": "close",
+        "X-Served-By": "172.19.0.5:8000"
+      }
+    },
+    "additional_requests": [
+      {
+        "method": "POST",
+        "path": "/chat",
+        "request_body": {
+          "question": "CP4 shared session 1",
+          "session_id": "940606fc-e9bf-434b-9938-662871be7381"
+        },
+        "status": 200,
+        "body": {
+          "session_id": "940606fc-e9bf-434b-9938-662871be7381",
+          "question": "CP4 shared session 1",
+          "answer": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+          "turn": 7,
+          "served_by": "instance-7bfd29",
+          "storage": "redis"
+        },
+        "headers": {
+          "Server": "nginx/1.31.10",
+          "Date": "Wed, 25 Nov 2026 08:33:24 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "269",
+          "Connection": "close",
+          "X-Served-By": "172.19.0.4:8000"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/chat",
+        "request_body": {
+          "question": "CP4 shared session 2",
+          "session_id": "940606fc-e9bf-434b-9938-662871be7381"
+        },
+        "status": 200,
+        "body": {
+          "session_id": "940606fc-e9bf-434b-9938-662871be7381",
+          "question": "CP4 shared session 2",
+          "answer": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.",
+          "turn": 8,
+          "served_by": "instance-ca9b2b",
+          "storage": "redis"
+        },
+        "headers": {
+          "Server": "nginx/1.31.10",
+          "Date": "Wed, 25 Nov 2026 08:33:24 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "238",
+          "Connection": "close",
+          "X-Served-By": "172.19.0.3:8000"
+        }
+      },
+      {
+        "method": "POST",
+        "path": "/chat",
+        "request_body": {
+          "question": "CP4 shared session 3",
+          "session_id": "940606fc-e9bf-434b-9938-662871be7381"
+        },
+        "status": 200,
+        "body": {
+          "session_id": "940606fc-e9bf-434b-9938-662871be7381",
+          "question": "CP4 shared session 3",
+          "answer": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+          "turn": 9,
+          "served_by": "instance-ccb811",
+          "storage": "redis"
+        },
+        "headers": {
+          "Server": "nginx/1.31.10",
+          "Date": "Wed, 25 Nov 2026 08:33:24 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "269",
+          "Connection": "close",
+          "X-Served-By": "172.19.0.5:8000"
+        }
+      }
+    ],
+    "extended_history": {
+      "method": "GET",
+      "path": "/chat/940606fc-e9bf-434b-9938-662871be7381/history",
+      "request_body": null,
+      "status": 200,
+      "body": {
+        "session_id": "940606fc-e9bf-434b-9938-662871be7381",
+        "messages": [
+          {
+            "role": "user",
+            "content": "What is Docker?",
+            "timestamp": "2026-11-25T08:33:23.792310+00:00"
+          },
+          {
+            "role": "assistant",
+            "content": "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!",
+            "timestamp": "2026-11-25T08:33:23.914309+00:00"
+          },
+          {
+            "role": "user",
+            "content": "Why do we need containers?",
+            "timestamp": "2026-11-25T08:33:23.921844+00:00"
+          },
+          {
+            "role": "assistant",
+            "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+            "timestamp": "2026-11-25T08:33:24.032686+00:00"
+          },
+          {
+            "role": "user",
+            "content": "What is Kubernetes?",
+            "timestamp": "2026-11-25T08:33:24.036704+00:00"
+          },
+          {
+            "role": "assistant",
+            "content": "Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.",
+            "timestamp": "2026-11-25T08:33:24.181481+00:00"
+          },
+          {
+            "role": "user",
+            "content": "How does load balancing work?",
+            "timestamp": "2026-11-25T08:33:24.188054+00:00"
+          },
+          {
+            "role": "assistant",
+            "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+            "timestamp": "2026-11-25T08:33:24.339166+00:00"
+          },
+          {
+            "role": "user",
+            "content": "What is Redis used for?",
+            "timestamp": "2026-11-25T08:33:24.347499+00:00"
+          },
+          {
+            "role": "assistant",
+            "content": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.",
+            "timestamp": "2026-11-25T08:33:24.487104+00:00"
+          },
+          {
+            "role": "user",
+            "content": "CP4 shared session 1",
+            "timestamp": "2026-11-25T08:33:24.538636+00:00"
+          },
+          {
+            "role": "assistant",
+            "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+            "timestamp": "2026-11-25T08:33:24.670143+00:00"
+          },
+          {
+            "role": "user",
+            "content": "CP4 shared session 2",
+            "timestamp": "2026-11-25T08:33:24.672693+00:00"
+          },
+          {
+            "role": "assistant",
+            "content": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.",
+            "timestamp": "2026-11-25T08:33:24.796939+00:00"
+          },
+          {
+            "role": "user",
+            "content": "CP4 shared session 3",
+            "timestamp": "2026-11-25T08:33:24.801900+00:00"
+          },
+          {
+            "role": "assistant",
+            "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+            "timestamp": "2026-11-25T08:33:24.930333+00:00"
+          }
+        ],
+        "count": 16
+      },
+      "headers": {
+        "Server": "nginx/1.31.10",
+        "Date": "Wed, 25 Nov 2026 08:33:24 GMT",
+        "Content-Type": "application/json",
+        "Content-Length": "2301",
+        "Connection": "close",
+        "X-Served-By": "172.19.0.4:8000"
+      }
+    },
+    "agent_restart": {
+      "before": {
+        "status": "ok",
+        "instance_id": "instance-ca9b2b",
+        "uptime_seconds": 6.7,
+        "storage": "redis",
+        "redis_connected": true
+      },
+      "after": {
+        "status": "ok",
+        "instance_id": "instance-8541d7",
+        "uptime_seconds": 1.1,
+        "storage": "redis",
+        "redis_connected": true
+      },
+      "history_after": {
+        "method": "GET",
+        "path": "/chat/940606fc-e9bf-434b-9938-662871be7381/history",
+        "request_body": null,
+        "status": 200,
+        "body": {
+          "session_id": "940606fc-e9bf-434b-9938-662871be7381",
+          "messages": [
+            {
+              "role": "user",
+              "content": "What is Docker?",
+              "timestamp": "2026-11-25T08:33:23.792310+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!",
+              "timestamp": "2026-11-25T08:33:23.914309+00:00"
+            },
+            {
+              "role": "user",
+              "content": "Why do we need containers?",
+              "timestamp": "2026-11-25T08:33:23.921844+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+              "timestamp": "2026-11-25T08:33:24.032686+00:00"
+            },
+            {
+              "role": "user",
+              "content": "What is Kubernetes?",
+              "timestamp": "2026-11-25T08:33:24.036704+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.",
+              "timestamp": "2026-11-25T08:33:24.181481+00:00"
+            },
+            {
+              "role": "user",
+              "content": "How does load balancing work?",
+              "timestamp": "2026-11-25T08:33:24.188054+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+              "timestamp": "2026-11-25T08:33:24.339166+00:00"
+            },
+            {
+              "role": "user",
+              "content": "What is Redis used for?",
+              "timestamp": "2026-11-25T08:33:24.347499+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.",
+              "timestamp": "2026-11-25T08:33:24.487104+00:00"
+            },
+            {
+              "role": "user",
+              "content": "CP4 shared session 1",
+              "timestamp": "2026-11-25T08:33:24.538636+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+              "timestamp": "2026-11-25T08:33:24.670143+00:00"
+            },
+            {
+              "role": "user",
+              "content": "CP4 shared session 2",
+              "timestamp": "2026-11-25T08:33:24.672693+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.",
+              "timestamp": "2026-11-25T08:33:24.796939+00:00"
+            },
+            {
+              "role": "user",
+              "content": "CP4 shared session 3",
+              "timestamp": "2026-11-25T08:33:24.801900+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+              "timestamp": "2026-11-25T08:33:24.930333+00:00"
+            }
+          ],
+          "count": 16
+        },
+        "headers": {
+          "Server": "nginx/1.31.10",
+          "Date": "Wed, 25 Nov 2026 08:33:32 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "2301",
+          "Connection": "close",
+          "X-Served-By": "172.19.0.3:8000"
+        }
+      },
+      "continued_request": {
+        "method": "POST",
+        "path": "/chat",
+        "request_body": {
+          "question": "Continue after agent restart",
+          "session_id": "940606fc-e9bf-434b-9938-662871be7381"
+        },
+        "status": 200,
+        "body": {
+          "session_id": "940606fc-e9bf-434b-9938-662871be7381",
+          "question": "Continue after agent restart",
+          "answer": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.",
+          "turn": 10,
+          "served_by": "instance-ccb811",
+          "storage": "redis"
+        },
+        "headers": {
+          "Server": "nginx/1.31.10",
+          "Date": "Wed, 25 Nov 2026 08:33:32 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "247",
+          "Connection": "close",
+          "X-Served-By": "172.19.0.5:8000"
+        }
+      },
+      "final_history": {
+        "method": "GET",
+        "path": "/chat/940606fc-e9bf-434b-9938-662871be7381/history",
+        "request_body": null,
+        "status": 200,
+        "body": {
+          "session_id": "940606fc-e9bf-434b-9938-662871be7381",
+          "messages": [
+            {
+              "role": "user",
+              "content": "What is Docker?",
+              "timestamp": "2026-11-25T08:33:23.792310+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!",
+              "timestamp": "2026-11-25T08:33:23.914309+00:00"
+            },
+            {
+              "role": "user",
+              "content": "Why do we need containers?",
+              "timestamp": "2026-11-25T08:33:23.921844+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+              "timestamp": "2026-11-25T08:33:24.032686+00:00"
+            },
+            {
+              "role": "user",
+              "content": "What is Kubernetes?",
+              "timestamp": "2026-11-25T08:33:24.036704+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.",
+              "timestamp": "2026-11-25T08:33:24.181481+00:00"
+            },
+            {
+              "role": "user",
+              "content": "How does load balancing work?",
+              "timestamp": "2026-11-25T08:33:24.188054+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+              "timestamp": "2026-11-25T08:33:24.339166+00:00"
+            },
+            {
+              "role": "user",
+              "content": "What is Redis used for?",
+              "timestamp": "2026-11-25T08:33:24.347499+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.",
+              "timestamp": "2026-11-25T08:33:24.487104+00:00"
+            },
+            {
+              "role": "user",
+              "content": "CP4 shared session 1",
+              "timestamp": "2026-11-25T08:33:24.538636+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+              "timestamp": "2026-11-25T08:33:24.670143+00:00"
+            },
+            {
+              "role": "user",
+              "content": "CP4 shared session 2",
+              "timestamp": "2026-11-25T08:33:24.672693+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.",
+              "timestamp": "2026-11-25T08:33:24.796939+00:00"
+            },
+            {
+              "role": "user",
+              "content": "CP4 shared session 3",
+              "timestamp": "2026-11-25T08:33:24.801900+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+              "timestamp": "2026-11-25T08:33:24.930333+00:00"
+            },
+            {
+              "role": "user",
+              "content": "Continue after agent restart",
+              "timestamp": "2026-11-25T08:33:32.558840+00:00"
+            },
+            {
+              "role": "assistant",
+              "content": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.",
+              "timestamp": "2026-11-25T08:33:32.709944+00:00"
+            }
+          ],
+          "count": 18
+        },
+        "headers": {
+          "Server": "nginx/1.31.10",
+          "Date": "Wed, 25 Nov 2026 08:33:32 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "2568",
+          "Connection": "close",
+          "X-Served-By": "172.19.0.4:8000"
+        }
+      }
+    },
+    "redis_down": {
+      "health": {
+        "method": "GET",
+        "path": "/health",
+        "request_body": null,
+        "status": 200,
+        "body": {
+          "status": "degraded",
+          "instance_id": "instance-8541d7",
+          "uptime_seconds": 2.7,
+          "storage": "redis",
+          "redis_connected": false
+        },
+        "headers": {
+          "Server": "nginx/1.31.10",
+          "Date": "Wed, 25 Nov 2026 08:33:33 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "116",
+          "Connection": "close",
+          "X-Served-By": "172.19.0.3:8000"
+        }
+      },
+      "ready": {
+        "method": "GET",
+        "path": "/ready",
+        "request_body": null,
+        "status": 503,
+        "body": {
+          "detail": "Redis not available"
+        },
+        "headers": {
+          "Server": "nginx/1.31.10",
+          "Date": "Wed, 25 Nov 2026 08:33:37 GMT",
+          "Content-Type": "application/json",
+          "Content-Length": "32",
+          "Connection": "close",
+          "X-Served-By": "172.19.0.5:8000, 172.19.0.4:8000, 172.19.0.3:8000"
+        }
+      }
+    },
+    "redis_recovered_ready": {
+      "method": "GET",
+      "path": "/ready",
+      "request_body": null,
+      "status": 200,
+      "body": {
+        "ready": true,
+        "instance": "instance-8541d7"
+      },
+      "headers": {
+        "Server": "nginx/1.31.10",
+        "Date": "Wed, 25 Nov 2026 08:33:37 GMT",
+        "Content-Type": "application/json",
+        "Content-Length": "43",
+        "Connection": "close",
+        "X-Served-By": "172.19.0.3:8000"
+      }
+    },
+    "log": "reports/cp4-compose.log"
+  },
+  "passed": true
+}

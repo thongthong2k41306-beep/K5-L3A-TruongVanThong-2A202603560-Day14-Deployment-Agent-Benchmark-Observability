@@ -1,0 +1,190 @@
+DAY 14 — HƯỚNG DẪN MÔI TRƯỜNG VÀ VIỆC CẦN LÀM
+
+1. MỞ MÔI TRƯỜNG
+
+Từ PowerShell tại gốc repo:
+  & "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" -ExecutionPolicy Bypass -File .\scripts\enter-lab.ps1
+
+Lệnh này mở Ubuntu-24.04 WSL2 tại đúng thư mục và kích hoạt .venv/core.
+Python Windows không dùng để chấm Part 6 vì thiếu SIGTERM kiểu Linux.
+Kiểm tra trong terminal Ubuntu:
+  python --version
+  python -c "import os; print(os.name)"
+  docker info --format '{{.ServerVersion}}'
+  docker compose version
+os.name phải là posix. Docker Desktop cần đang mở.
+
+Môi trường riêng tránh xung đột Pydantic:
+  .venv/core          Part 1, 2, 4 develop, 5, 6, 7 develop.
+  .venv/gateway       Part 4 production (requirements đòi Pydantic >= 2.11).
+  .venv/observability Part 7 production nếu chạy Python trực tiếp.
+                     Docker tự cài requirements trong image, không dùng venv host.
+
+Mở terminal riêng cho Part 4 production:
+  & "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" -ExecutionPolicy Bypass -File .\scripts\enter-lab.ps1 -Profile gateway
+
+Trong Ubuntu, từ gốc repo, có thể đổi môi trường:
+  source .venv/core/bin/activate
+  source .venv/gateway/bin/activate
+  source .venv/observability/bin/activate
+
+Cài lại thư viện và tạo file cấu hình local còn thiếu:
+  bash scripts/setup-wsl.sh
+Script giữ nguyên file .env đã có, không in secret. Các venv là Python Linux.
+
+2. THỨ TỰ LÀM THEO LỚP K5
+
+Ưu tiên README.md (11 lưu ý K5), RULES.md, CHECKPOINTS.md,
+SUBMISSION.md và RUBRIC.md khi khác CODE_LAB.md/checklist cũ.
+Tổng điểm thô 120, quy ra 100; đạt từ 84/120. Part 6 chiếm 60 điểm.
+
+CP0: Kiểm tra tên repo GitHub và quyền Public.
+Tên hiện tại khác mẫu SUBMISSION.md. Tên yêu cầu:
+  K5-L3A-DAY14-HoVaTen-MSSV-Deployment-Benchmark-Observability
+Đổi tên trên GitHub rồi cập nhật git remote theo URL mới. Không cần đổi thư mục local.
+
+CP1 — Part 1 (20 phút): chạy develop, đọc production, ghi ít nhất 5 anti-pattern
+và bảng so sánh vào MISSION_ANSWERS.md. Bắt đầu từ gốc repo trong Ubuntu:
+  source .venv/core/bin/activate
+  cd 01-localhost-vs-production/develop
+  python app.py
+Terminal Ubuntu thứ hai:
+  curl -i -X POST 'http://localhost:8000/ask?question=Hello'
+Bản develop nhận query, không nhận JSON. Ctrl+C server cũ trước khi đổi bài.
+
+CP2 — Part 2 (30 phút): trả lời 4 câu Dockerfile, build và chạy hai image,
+đo kích thước thật rồi tính % giảm. Build từ GỐC repo:
+  docker build -f 02-docker/develop/Dockerfile -t my-agent:develop .
+  docker build -f 02-docker/production/Dockerfile -t my-agent:advanced .
+Stack có agent + Redis + Qdrant + Nginx; test qua cổng 80.
+Dùng tên project riêng, từ 02-docker/production:
+  docker compose -p k5-day14-docker up -d --build
+  docker compose -p k5-day14-docker down
+File .env.local được script setup tạo sẵn.
+
+CP3 — Part 4 (25 phút): dùng develop để thử API key.
+  AGENT_API_KEY=secret-key-123 python app.py
+Đối với production, dùng venv gateway, đăng nhập POST /auth/token bằng
+student / demo123; dùng JWT nhận được để gọi POST /ask.
+Ghi output HTTP 401, 200, 429 (che token) và giải thích cost guard.
+
+CP4 — Part 5 (20 phút): health/readiness, graceful shutdown, state trong Redis.
+Từ 05-scaling-reliability/production:
+  docker compose -p k5-day14-scaling up -d --build --scale agent=3
+  python test_stateless.py
+  docker compose -p k5-day14-scaling down
+Endpoint stack là POST /chat, cổng 8080. Không chạy đồng thời stack Part 7.
+
+CP5 — Part 6 (60 phút, ưu tiên cao nhất): hoàn thiện TODO ngay trong
+06-lab-complete/, theo hợp đồng trong README của thư mục này:
+  health -> config -> JSON logging -> auth -> Redis + ready -> rate limit
+  -> cost guard -> graceful shutdown -> Dockerfile/.dockerignore
+  -> Compose agent + Redis -> Railway hoặc Render config.
+File .env local đã chuẩn bị nhưng app/config.py hiện vẫn cần bạn viết để đọc env.
+Nếu muốn nạp file .env vào môi trường khi chạy local, từ 06-lab-complete:
+  set -a; source .env; set +a
+Hoặc dùng uvicorn --env-file .env khi tự chạy app.
+  python -m uvicorn app.main:app --env-file .env --host 0.0.0.0 --port 8000
+Chấm trong 06-lab-complete, từ venv core:
+  python check_production_ready.py --static-only
+  python check_production_ready.py
+Mục tiêu cuối PASS 12/12 ở bản đầy đủ, có Docker. Khung TODO chưa đạt là bình thường.
+Không sửa script chấm.
+
+CP6 — Part 3 (25 phút, làm SAU Part 6): deploy chính 06-lab-complete lên
+Railway HOẶC Render, thêm Redis cloud, đặt AGENT_API_KEY và REDIS_URL.
+Railway cần Node.js/npm và Railway CLI (chỉ cần khi bạn chọn Railway).
+Tài khoản cloud và đăng nhập do bạn thực hiện; setup local chưa tạo service cloud.
+Kiểm tra /health=200, /ready=200; POST /ask thiếu key=401, có key=200.
+Viết DEPLOYMENT.md, so sánh 2 config và mô tả 3–5 dòng pipeline Cloud Run.
+Cloud Run chỉ đọc YAML, không bắt buộc deploy GCP.
+
+CP7 — Part 7 local (45 phút): venv core; hai terminal trong
+06-lab-complete/benchmark-observability/develop:
+  AGENT_VERSION=v1 PORT=8001 python app.py
+  AGENT_VERSION=v2 PORT=8002 python app.py
+Thêm histogram độ dài câu hỏi; load test concurrency 1/10/50/100 (300 requests).
+Đo thêm MOCK_SLOW_RATE=0/0.03/0.1 ở concurrency 20.
+Eval v1, v2 rồi sửa KNOWLEDGE_BASE để v2 đạt 23/23, không regression.
+Luôn truyền --url đúng cổng và --out để lưu JSON. Xem lệnh chính xác ở CP7
+trong CHECKPOINTS.md. Không sửa golden_dataset.jsonl.
+
+CP8 — Part 7 Docker (sau lab): từ benchmark-observability/production:
+  docker compose -p k5-day14-observability up -d --build --scale agent=1
+Grafana :3000 (admin/admin), Prometheus :9090, Jaeger :16686,
+Locust :8089, agent qua Nginx :8080.
+Tạo tải, chụp Grafana, 1 trace chậm + 1 trace lỗi kèm log cùng trace_id.
+Cho ít nhất 2 alert firing CÙNG LÚC, đo thời gian và chụp trang Alerts.
+Benchmark 1 và 3 instance bằng Locust HEADLESS để xuất CSV.
+Đọc CP8 để có đủ lệnh và tên file. Chụp ảnh/lưu log trước khi tắt stack:
+  docker compose -p k5-day14-observability down
+
+3. BỘ HỒ SƠ NỘP BÀI
+
+Ở gốc repo:
+  MISSION_ANSWERS.md   Part 1–5 + output chấm Part 6 + AI log.
+  DEPLOYMENT.md        URL thật, biến môi trường (không ghi giá trị secret), lệnh test.
+  BENCHMARK_REPORT.md  Copy template một lần, điền số đo thật.
+  reports/            4 JSON concurrency + 3 JSON slow-rate + 3 JSON eval.
+  benchmark-results/  scale_1_stats.csv và scale_3_stats.csv.
+  screenshots/        3 ảnh deploy + 4 ảnh observability (7 ảnh tất cả).
+  06-lab-complete/    Code đã hoàn thiện và PASS 12/12.
+
+Không commit .env, token, API key; script setup tạo các file này dưới gitignore.
+Mọi số liệu phải lấy từ lần chạy thật. Ghi việc dùng AI theo RULES.md.
+Nộp link repo Public lên LMS, hạn 23:59 GMT+7 ngày lab (hoặc theo Lab Coach).
+
+4. PHẠM VI SETUP
+
+Các script trong scripts/ phục vụ môi trường, không hoàn thiện bài tập TODO.
+Không có API LLM thật hay chi phí gọi LLM; bài dùng mock.
+Nếu venv báo No module named..., kiểm tra đã kích hoạt đúng profile.
+Nếu Docker không kết nối, mở Docker Desktop và kiểm tra Settings > Resources
+> WSL Integration > Ubuntu-24.04 (tích hợp đã được bạn cho phép bật).
+Tài liệu Docker: https://docs.docker.com/desktop/features/wsl/
+
+5. KẾT QUẢ KIỂM TRA SETUP NGÀY 25/11/2026
+
+Ubuntu 24.04 WSL2: Python 3.12.3, os.name=posix.
+Docker Engine 29.9.3, Docker Compose v5.7.0; hello-world chạy thành công.
+Docker Desktop đã tích hợp Ubuntu-24.04 theo sự đồng ý của bạn.
+Không thay đổi distro WSL mặc định.
+Cả 3 virtualenv: pip check không phát hiện xung đột thư viện.
+18 kiểm tra HTTP trên 8 ứng dụng mẫu: đạt; server kiểm tra đã dừng.
+Kiểm tra tracing production bằng Python dùng TRACING_ENABLED=false.
+4 file Compose hợp lệ. Chưa chạy toàn bộ stack Grafana/Jaeger/Locust.
+Cú pháp các file Python được Git theo dõi và script setup: hợp lệ.
+5 file cấu hình local được tạo và đều nằm trong gitignore.
+Part 6 --static-only: 0/12 tiêu chí, đúng trạng thái khung TODO ban đầu;
+đây không phải kết quả chấm runtime đầy đủ và không phải lỗi cài môi trường.
+Chưa tạo tài khoản/service cloud, chưa cài Node/npm/Railway CLI (chỉ cần
+nếu chọn Railway; Render có thể triển khai bằng dashboard).
+Chi tiết local (được gitignore): .venv/setup-verification.json,
+.venv/part6-initial-check.txt và .venv/*-installed.txt.
+
+6. CẬP NHẬT VỊ TRÍ DỮ LIỆU DOCKER KHI LÀM CP2
+
+Ngày 25/11/2026, build CP2 gặp lỗi I/O vì ổ C gần đầy. Theo sự đồng ý của bạn,
+đã tạm dừng WSL, chuyển vị trí dữ liệu Docker sang:
+  D:\DockerData\DockerDesktopWSL
+Docker Engine 29.9.3 và container hello-world đã chạy thành công từ vị trí mới.
+Bản dữ liệu cũ được sao chép và so SHA256 trước khi đưa vào thư mục hoạt động;
+bản nguồn C chỉ được xóa sau khi xác nhận Docker chạy được trên D.
+Bản sao dự phòng còn giữ tại D:\DockerData\wsl.
+Không dùng junction cho ổ WSL vì WSL từ chối mount qua đường dẫn đó.
+Ubuntu và virtualenv được giữ nguyên; server CP1 đã dừng khi tắt WSL.
+Mở lại terminal bằng lệnh ở mục 1. Khi cần chạy lại CP2 từ gốc repo trong Ubuntu:
+  .venv/core/bin/python scripts/run-cp2.py
+Kết quả và log nằm trong reports/cp2-*.json, reports/cp2-*.log.
+
+
+7. KẾT QUẢ CP5 NGÀY 25/11/2026
+
+Part 6 đã hoàn thiện, thay cho trạng thái TODO ban đầu ở mục 5.
+Checker đầy đủ với Docker: PASS 12/12, 43/43 checks, exit code 0.
+Xem reports/cp5-production-ready.txt và MISSION_ANSWERS.md mục Part 6.
+Từ gốc repository trong Ubuntu chạy lại:
+  .venv/core/bin/python scripts/run-cp5.py
+Kiểm tra bổ sung Compose/Redis và request đồng thời:
+  .venv/core/bin/python scripts/probe-cp5.py
+CP6 chọn Render, cần deploy code mới lên cloud và kiểm tra URL public thật.

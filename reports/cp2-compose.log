@@ -1,0 +1,60 @@
+nginx-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+nginx-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+nginx-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+nginx-1  | 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+nginx-1  | 10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+nginx-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+nginx-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+nginx-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+nginx-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:10:42 +0000] "POST /ask HTTP/1.1" 200 126 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:10:42 +0000] "GET /ready HTTP/1.1" 200 14 "-" "Python-urllib/3.12"
+qdrant-1  |            _                 _    
+qdrant-1  |   __ _  __| |_ __ __ _ _ __ | |_  
+qdrant-1  |  / _` |/ _` | '__/ _` | '_ \| __| 
+qdrant-1  | | (_| | (_| | | | (_| | | | | |_  
+qdrant-1  |  \__, |\__,_|_|  \__,_|_| |_|\__| 
+qdrant-1  |     |_|                           
+qdrant-1  | 
+qdrant-1  | Version: 1.9.0, build: b99d5074
+qdrant-1  | Access web UI at http://localhost:6333/dashboard
+qdrant-1  | 
+qdrant-1  | 2026-11-25T08:10:25.783471Z  INFO storage::content_manager::consensus::persistent: Loading raft state from ./storage/raft_state.json    
+qdrant-1  | 2026-11-25T08:10:25.794418Z  INFO qdrant: Distributed mode disabled    
+qdrant-1  | 2026-11-25T08:10:25.794461Z  INFO qdrant: Telemetry reporting enabled, id: b214d719-972e-49f8-a93e-68e909be4c94    
+qdrant-1  | 2026-11-25T08:10:25.796308Z  INFO qdrant::actix: TLS disabled for REST API    
+qdrant-1  | 2026-11-25T08:10:25.796532Z  INFO qdrant::actix: Qdrant HTTP listening on 6333    
+qdrant-1  | 2026-11-25T08:10:25.796561Z  INFO actix_server::builder: Starting 11 workers
+qdrant-1  | 2026-11-25T08:10:25.796573Z  INFO actix_server::server: Actix runtime found; starting in Actix runtime
+qdrant-1  | 2026-11-25T08:10:25.798265Z  INFO qdrant::tonic: Qdrant gRPC listening on 6334    
+qdrant-1  | 2026-11-25T08:10:25.798312Z  INFO qdrant::tonic: TLS disabled for gRPC API    
+agent-1   | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+agent-1   | INFO:     Started parent process [1]
+agent-1   | INFO:     Started server process [9]
+agent-1   | INFO:     Waiting for application startup.
+agent-1   | {"time":"2026-11-25 08:10:37,840","level":"INFO","msg":"Starting agent..."}
+agent-1   | INFO:     Started server process [8]
+agent-1   | INFO:     Waiting for application startup.
+agent-1   | {"time":"2026-11-25 08:10:37,843","level":"INFO","msg":"Starting agent..."}
+agent-1   | {"time":"2026-11-25 08:10:37,940","level":"INFO","msg":"Agent ready"}
+agent-1   | INFO:     Application startup complete.
+agent-1   | {"time":"2026-11-25 08:10:37,943","level":"INFO","msg":"Agent ready"}
+agent-1   | INFO:     Application startup complete.
+agent-1   | INFO:     127.0.0.1:36948 - "GET /health HTTP/1.1" 200 OK
+agent-1   | INFO:     172.19.0.5:47280 - "GET /health HTTP/1.1" 200 OK
+agent-1   | INFO:     172.19.0.5:47280 - "GET /health HTTP/1.1" 200 OK
+agent-1   | {"time":"2026-11-25 08:10:42,542","level":"INFO","msg":"{"event": "request", "q_len": 21}"}
+agent-1   | INFO:     172.19.0.5:47280 - "POST /ask HTTP/1.1" 200 OK
+agent-1   | INFO:     172.19.0.5:47280 - "GET /ready HTTP/1.1" 200 OK
+redis-1   | 1:C 25 Nov 2026 08:10:25.959 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1   | 1:C 25 Nov 2026 08:10:25.959 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1   | 1:C 25 Nov 2026 08:10:25.959 * Configuration loaded
+redis-1   | 1:M 25 Nov 2026 08:10:25.959 * monotonic clock: POSIX clock_gettime
+redis-1   | 1:M 25 Nov 2026 08:10:25.960 * Running mode=standalone, port=6379.
+redis-1   | 1:M 25 Nov 2026 08:10:25.960 * Server initialized
+redis-1   | 1:M 25 Nov 2026 08:10:25.960 * Loading RDB produced by version 7.4.12
+redis-1   | 1:M 25 Nov 2026 08:10:25.960 * RDB age 74 seconds
+redis-1   | 1:M 25 Nov 2026 08:10:25.960 * RDB memory usage when created 0.93 Mb
+redis-1   | 1:M 25 Nov 2026 08:10:25.960 * Done loading RDB, keys loaded: 0, keys expired: 0.
+redis-1   | 1:M 25 Nov 2026 08:10:25.960 * DB loaded from disk: 0.000 seconds
+redis-1   | 1:M 25 Nov 2026 08:10:25.960 * Ready to accept connections tcp

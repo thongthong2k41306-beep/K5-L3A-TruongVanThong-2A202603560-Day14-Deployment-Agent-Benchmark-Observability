@@ -1,0 +1,67 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 3.32kB 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.11-slim
+#2 DONE 0.5s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 486B 0.1s done
+#3 DONE 0.1s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [builder 1/5] FROM docker.io/library/python:3.11-slim@sha256:61e01f72680f86a5279ad510818ab7b2ee9f049822589d4e34e33e044360356c
+#5 resolve docker.io/library/python:3.11-slim@sha256:61e01f72680f86a5279ad510818ab7b2ee9f049822589d4e34e33e044360356c 0.0s done
+#5 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 2.39kB 0.1s done
+#4 DONE 0.1s
+
+#6 [runtime 5/8] COPY 02-docker/production/main.py .
+#6 CACHED
+
+#7 [builder 2/5] WORKDIR /app
+#7 CACHED
+
+#8 [runtime 4/8] COPY --from=builder /root/.local /home/appuser/.local
+#8 CACHED
+
+#9 [runtime 3/8] WORKDIR /app
+#9 CACHED
+
+#10 [builder 3/5] RUN apt-get update && apt-get install -y     gcc     libpq-dev     && rm -rf /var/lib/apt/lists/*
+#10 CACHED
+
+#11 [builder 4/5] COPY 02-docker/production/requirements.txt .
+#11 CACHED
+
+#12 [runtime 6/8] RUN mkdir -p /app/utils
+#12 CACHED
+
+#13 [runtime 7/8] COPY utils/mock_llm.py /app/utils/mock_llm.py
+#13 CACHED
+
+#14 [runtime 2/8] RUN groupadd -r appuser && useradd -r -g appuser appuser
+#14 CACHED
+
+#15 [builder 5/5] RUN pip install --no-cache-dir --user -r requirements.txt
+#15 CACHED
+
+#16 [runtime 8/8] RUN chown -R appuser:appuser /app
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers done
+#17 exporting manifest sha256:617552003bc3dc1a5f2ddaa5954a6b2ee8222ffeab7564a06979c4604cd1d8b6 done
+#17 exporting config sha256:631b4b5e49b68206c114b4840698487ae343852da396fca40482c7bd8f586717 done
+#17 exporting attestation manifest sha256:a506be397937721257f666d796be615811004512458da0be542eded492f55d6e 0.0s done
+#17 exporting manifest list sha256:dd34d1fc617400b7bc0500bfa6176a678ba7a265ddab807070d4369c97a277c9 0.0s done
+#17 naming to docker.io/library/my-agent:advanced done
+#17 unpacking to docker.io/library/my-agent:advanced
+#17 unpacking to docker.io/library/my-agent:advanced 0.0s done
+#17 DONE 0.1s

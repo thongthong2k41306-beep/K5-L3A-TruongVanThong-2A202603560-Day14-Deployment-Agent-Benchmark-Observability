@@ -1,0 +1,538 @@
+CP3 curl -i evidence | 2026-11-25T15:15:45.952742+07:00
+Tokens and keys are redacted.
+
+=== api_key_missing ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:53319/ask --header 'Content-Type: application/json' --data '{"question": "What is Docker?"}'
+HTTP/1.1 401 Unauthorized
+date: Wed, 25 Nov 2026 08:15:49 GMT
+server: uvicorn
+content-length: 67
+content-type: application/json
+
+{"detail":"Missing API key. Include header: X-API-Key: <your-key>"}
+
+=== api_key_wrong ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:53319/ask --header 'X-API-Key: wrong-demo-key' --header 'Content-Type: application/json' --data '{"question": "What is Docker?"}'
+HTTP/1.1 403 Forbidden
+date: Wed, 25 Nov 2026 08:15:49 GMT
+server: uvicorn
+content-length: 29
+content-type: application/json
+
+{"detail":"Invalid API key."}
+
+=== api_key_valid ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:53319/ask --header 'X-API-Key: [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "What is Docker?"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:15:49 GMT
+server: uvicorn
+content-length: 132
+content-type: application/json
+
+{"question":"What is Docker?","answer":"Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!"}
+
+=== login_wrong_password ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/auth/token --header 'Content-Type: application/json' --data '{"username": "student", "password": "wrong-demo-password"}'
+HTTP/1.1 401 Unauthorized
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 32
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":"Invalid credentials"}
+
+=== login_student ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/auth/token --header 'Content-Type: application/json' --data '{"username": "student", "password": "demo123"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 307
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"access_token":"[REDACTED]","token_type":"bearer","expires_in_minutes":60,"hint":"Include in header: Authorization: Bearer [REDACTED]..."}
+
+=== jwt_missing ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Content-Type: application/json' --data '{"question": "What is Docker?"}'
+HTTP/1.1 401 Unauthorized
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+www-authenticate: Bearer
+content-length: 76
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":"Authentication required. Include: Authorization: Bearer <token>"}
+
+=== jwt_invalid ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer invalid-demo-token' --header 'Content-Type: application/json' --data '{"question": "What is Docker?"}'
+HTTP/1.1 403 Forbidden
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 27
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":"Invalid token."}
+
+=== jwt_expired ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "What is Docker?"}'
+HTTP/1.1 401 Unauthorized
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 47
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":"Token expired. Please login again."}
+
+=== student_admin_denied ===
+$ curl --silent --show-error --include --max-time 15 --request GET http://127.0.0.1:41139/admin/stats --header 'Authorization: Bearer [REDACTED]'
+HTTP/1.1 403 Forbidden
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 23
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":"Admin only"}
+
+=== empty_question ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": ""}'
+HTTP/1.1 422 Unprocessable Entity
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 148
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":[{"type":"string_too_short","loc":["body","question"],"msg":"String should have at least 1 character","input":"","ctx":{"min_length":1}}]}
+
+=== burst_01 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 1"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 190
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Rate limit test 1","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","usage":{"requests_remaining":9,"budget_remaining_usd":1.7e-05}}
+
+=== burst_02 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 2"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 190
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Rate limit test 2","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","usage":{"requests_remaining":8,"budget_remaining_usd":3.4e-05}}
+
+=== burst_03 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 3"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 198
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Rate limit test 3","answer":"Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.","usage":{"requests_remaining":7,"budget_remaining_usd":5.3e-05}}
+
+=== burst_04 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 4"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 188
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Rate limit test 4","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","usage":{"requests_remaining":6,"budget_remaining_usd":7e-05}}
+
+=== burst_05 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 5"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 190
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Rate limit test 5","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","usage":{"requests_remaining":5,"budget_remaining_usd":8.6e-05}}
+
+=== burst_06 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 6"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 191
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Rate limit test 6","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","usage":{"requests_remaining":4,"budget_remaining_usd":0.000103}}
+
+=== burst_07 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 7"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 190
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Rate limit test 7","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","usage":{"requests_remaining":3,"budget_remaining_usd":0.00012}}
+
+=== burst_08 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 8"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 199
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Rate limit test 8","answer":"Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.","usage":{"requests_remaining":2,"budget_remaining_usd":0.000139}}
+
+=== burst_09 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 9"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:15:54 GMT
+server: uvicorn
+content-length: 199
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Rate limit test 9","answer":"Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.","usage":{"requests_remaining":1,"budget_remaining_usd":0.000158}}
+
+=== burst_10 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 10"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:15:55 GMT
+server: uvicorn
+content-length: 192
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"Rate limit test 10","answer":"Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé.","usage":{"requests_remaining":0,"budget_remaining_usd":0.000175}}
+
+=== burst_11 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 11"}'
+HTTP/1.1 429 Too Many Requests
+date: Wed, 25 Nov 2026 08:15:55 GMT
+server: uvicorn
+x-ratelimit-limit: 10
+x-ratelimit-remaining: 0
+x-ratelimit-reset: 1795594615
+retry-after: 59
+content-length: 98
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":{"error":"Rate limit exceeded","limit":10,"window_seconds":60,"retry_after_seconds":59}}
+
+=== burst_12 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 12"}'
+HTTP/1.1 429 Too Many Requests
+date: Wed, 25 Nov 2026 08:15:55 GMT
+server: uvicorn
+x-ratelimit-limit: 10
+x-ratelimit-remaining: 0
+x-ratelimit-reset: 1795594615
+retry-after: 59
+content-length: 98
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":{"error":"Rate limit exceeded","limit":10,"window_seconds":60,"retry_after_seconds":59}}
+
+=== burst_13 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 13"}'
+HTTP/1.1 429 Too Many Requests
+date: Wed, 25 Nov 2026 08:15:55 GMT
+server: uvicorn
+x-ratelimit-limit: 10
+x-ratelimit-remaining: 0
+x-ratelimit-reset: 1795594615
+retry-after: 59
+content-length: 98
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":{"error":"Rate limit exceeded","limit":10,"window_seconds":60,"retry_after_seconds":59}}
+
+=== burst_14 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 14"}'
+HTTP/1.1 429 Too Many Requests
+date: Wed, 25 Nov 2026 08:15:55 GMT
+server: uvicorn
+x-ratelimit-limit: 10
+x-ratelimit-remaining: 0
+x-ratelimit-reset: 1795594615
+retry-after: 59
+content-length: 98
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":{"error":"Rate limit exceeded","limit":10,"window_seconds":60,"retry_after_seconds":59}}
+
+=== burst_15 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 15"}'
+HTTP/1.1 429 Too Many Requests
+date: Wed, 25 Nov 2026 08:15:55 GMT
+server: uvicorn
+x-ratelimit-limit: 10
+x-ratelimit-remaining: 0
+x-ratelimit-reset: 1795594616
+retry-after: 59
+content-length: 98
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":{"error":"Rate limit exceeded","limit":10,"window_seconds":60,"retry_after_seconds":59}}
+
+=== burst_16 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 16"}'
+HTTP/1.1 429 Too Many Requests
+date: Wed, 25 Nov 2026 08:15:55 GMT
+server: uvicorn
+x-ratelimit-limit: 10
+x-ratelimit-remaining: 0
+x-ratelimit-reset: 1795594616
+retry-after: 59
+content-length: 98
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":{"error":"Rate limit exceeded","limit":10,"window_seconds":60,"retry_after_seconds":59}}
+
+=== burst_17 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 17"}'
+HTTP/1.1 429 Too Many Requests
+date: Wed, 25 Nov 2026 08:15:55 GMT
+server: uvicorn
+x-ratelimit-limit: 10
+x-ratelimit-remaining: 0
+x-ratelimit-reset: 1795594616
+retry-after: 59
+content-length: 98
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":{"error":"Rate limit exceeded","limit":10,"window_seconds":60,"retry_after_seconds":59}}
+
+=== burst_18 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 18"}'
+HTTP/1.1 429 Too Many Requests
+date: Wed, 25 Nov 2026 08:15:55 GMT
+server: uvicorn
+x-ratelimit-limit: 10
+x-ratelimit-remaining: 0
+x-ratelimit-reset: 1795594616
+retry-after: 59
+content-length: 98
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":{"error":"Rate limit exceeded","limit":10,"window_seconds":60,"retry_after_seconds":59}}
+
+=== burst_19 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 19"}'
+HTTP/1.1 429 Too Many Requests
+date: Wed, 25 Nov 2026 08:15:55 GMT
+server: uvicorn
+x-ratelimit-limit: 10
+x-ratelimit-remaining: 0
+x-ratelimit-reset: 1795594616
+retry-after: 59
+content-length: 98
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":{"error":"Rate limit exceeded","limit":10,"window_seconds":60,"retry_after_seconds":59}}
+
+=== burst_20 ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41139/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "Rate limit test 20"}'
+HTTP/1.1 429 Too Many Requests
+date: Wed, 25 Nov 2026 08:15:55 GMT
+server: uvicorn
+x-ratelimit-limit: 10
+x-ratelimit-remaining: 0
+x-ratelimit-reset: 1795594616
+retry-after: 59
+content-length: 98
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":{"error":"Rate limit exceeded","limit":10,"window_seconds":60,"retry_after_seconds":59}}
+
+=== usage_after_burst ===
+$ curl --silent --show-error --include --max-time 15 --request GET http://127.0.0.1:41139/me/usage --header 'Authorization: Bearer [REDACTED]'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:15:55 GMT
+server: uvicorn
+content-length: 184
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"user_id":"student","date":"2026-11-25","requests":10,"input_tokens":80,"output_tokens":272,"cost_usd":0.000175,"budget_usd":1.0,"budget_remaining_usd":0.999825,"budget_used_pct":0.0}
+
+=== budget_login ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41061/auth/token --header 'Content-Type: application/json' --data '{"username": "student", "password": "demo123"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:16:00 GMT
+server: uvicorn
+content-length: 307
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"access_token":"[REDACTED]","token_type":"bearer","expires_in_minutes":60,"hint":"Include in header: Authorization: Bearer [REDACTED]..."}
+
+=== budget_first_request ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41061/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "What is Docker?"}'
+HTTP/1.1 200 OK
+date: Wed, 25 Nov 2026 08:16:00 GMT
+server: uvicorn
+content-length: 196
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"question":"What is Docker?","answer":"Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!","usage":{"requests_remaining":9,"budget_remaining_usd":1.9e-05}}
+
+=== budget_exhausted ===
+$ curl --silent --show-error --include --max-time 15 --request POST http://127.0.0.1:41061/ask --header 'Authorization: Bearer [REDACTED]' --header 'Content-Type: application/json' --data '{"question": "What is Docker?"}'
+HTTP/1.1 402 Payment Required
+date: Wed, 25 Nov 2026 08:16:00 GMT
+server: uvicorn
+content-length: 109
+content-type: application/json
+vary: Origin
+x-content-type-options: nosniff
+x-frame-options: DENY
+x-xss-protection: 1; mode=block
+referrer-policy: strict-origin-when-cross-origin
+
+{"detail":{"error":"Daily budget exceeded","used_usd":1.9e-05,"budget_usd":1e-06,"resets_at":"midnight UTC"}}

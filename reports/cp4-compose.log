@@ -1,0 +1,95 @@
+redis-1  | 1:C 25 Nov 2026 08:33:06.148 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 1:C 25 Nov 2026 08:33:06.148 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 1:C 25 Nov 2026 08:33:06.148 * Configuration loaded
+redis-1  | 1:M 25 Nov 2026 08:33:06.148 * monotonic clock: POSIX clock_gettime
+redis-1  | 1:M 25 Nov 2026 08:33:06.149 * Running mode=standalone, port=6379.
+redis-1  | 1:M 25 Nov 2026 08:33:06.149 * Server initialized
+redis-1  | 1:M 25 Nov 2026 08:33:06.149 * Ready to accept connections tcp
+agent-2  | ✅ Connected to Redis
+agent-2  | INFO:     Started server process [1]
+agent-2  | INFO:     Waiting for application startup.
+agent-2  | INFO:app:Starting instance instance-7bfd29
+agent-2  | INFO:app:Storage: Redis ✅
+agent-2  | INFO:     Application startup complete.
+agent-2  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+agent-2  | INFO:     127.0.0.1:45112 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     172.19.0.6:36286 - "GET /health HTTP/1.1" 200 OK
+agent-2  | INFO:     172.19.0.6:36286 - "POST /chat HTTP/1.1" 200 OK
+agent-2  | INFO:     172.19.0.6:36286 - "POST /chat HTTP/1.1" 200 OK
+agent-2  | INFO:     172.19.0.6:36286 - "POST /chat HTTP/1.1" 200 OK
+agent-2  | INFO:     172.19.0.6:36286 - "GET /chat/940606fc-e9bf-434b-9938-662871be7381/history HTTP/1.1" 200 OK
+agent-2  | INFO:     172.19.0.6:56976 - "GET /chat/940606fc-e9bf-434b-9938-662871be7381/history HTTP/1.1" 200 OK
+agent-2  | INFO:     172.19.0.6:56976 - "GET /ready HTTP/1.1" 503 Service Unavailable
+agent-3  | ✅ Connected to Redis
+agent-3  | INFO:     Started server process [1]
+agent-3  | INFO:     Waiting for application startup.
+agent-3  | INFO:app:Starting instance instance-ccb811
+agent-3  | INFO:app:Storage: Redis ✅
+agent-3  | INFO:     Application startup complete.
+agent-3  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+agent-3  | INFO:     127.0.0.1:45116 - "GET /health HTTP/1.1" 200 OK
+agent-3  | INFO:     172.19.0.6:54614 - "GET /ready HTTP/1.1" 200 OK
+agent-3  | INFO:     172.19.0.6:54614 - "POST /chat HTTP/1.1" 200 OK
+agent-3  | INFO:     172.19.0.6:54614 - "POST /chat HTTP/1.1" 200 OK
+agent-3  | INFO:     172.19.0.6:54614 - "GET /chat/940606fc-e9bf-434b-9938-662871be7381/history HTTP/1.1" 200 OK
+agent-3  | INFO:     172.19.0.6:54614 - "POST /chat HTTP/1.1" 200 OK
+agent-3  | INFO:     172.19.0.6:54634 - "POST /chat HTTP/1.1" 200 OK
+agent-3  | INFO:     172.19.0.6:54634 - "GET /ready HTTP/1.1" 503 Service Unavailable
+nginx-1  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+nginx-1  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+nginx-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+nginx-1  | 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+nginx-1  | 10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+nginx-1  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+nginx-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+nginx-1  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+nginx-1  | /docker-entrypoint.sh: Configuration complete; ready for start up
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:23 +0000] "GET /ready HTTP/1.1" 200 43 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:23 +0000] "GET /ready HTTP/1.1" 200 43 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:23 +0000] "POST /chat HTTP/1.1" 200 241 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:24 +0000] "POST /chat HTTP/1.1" 200 275 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:24 +0000] "POST /chat HTTP/1.1" 200 245 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:24 +0000] "POST /chat HTTP/1.1" 200 278 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:24 +0000] "POST /chat HTTP/1.1" 200 241 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:24 +0000] "GET /chat/940606fc-e9bf-434b-9938-662871be7381/history HTTP/1.1" 200 1462 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:24 +0000] "GET /chat/940606fc-e9bf-434b-9938-662871be7381/history HTTP/1.1" 200 1462 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:24 +0000] "POST /chat HTTP/1.1" 200 269 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:24 +0000] "POST /chat HTTP/1.1" 200 238 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:24 +0000] "POST /chat HTTP/1.1" 200 269 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:24 +0000] "GET /chat/940606fc-e9bf-434b-9938-662871be7381/history HTTP/1.1" 200 2301 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:32 +0000] "GET /chat/940606fc-e9bf-434b-9938-662871be7381/history HTTP/1.1" 200 2301 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:32 +0000] "POST /chat HTTP/1.1" 200 247 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:32 +0000] "GET /chat/940606fc-e9bf-434b-9938-662871be7381/history HTTP/1.1" 200 2568 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:37 +0000] "GET /ready HTTP/1.1" 503 32 "-" "Python-urllib/3.12"
+nginx-1  | 172.19.0.1 - - [25/Nov/2026:08:33:37 +0000] "GET /ready HTTP/1.1" 200 43 "-" "Python-urllib/3.12"
+agent-1  | ✅ Connected to Redis
+agent-1  | INFO:     Started server process [1]
+agent-1  | INFO:     Waiting for application startup.
+agent-1  | INFO:app:Starting instance instance-ca9b2b
+agent-1  | INFO:app:Storage: Redis ✅
+agent-1  | INFO:     Application startup complete.
+agent-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+agent-1  | INFO:     127.0.0.1:45108 - "GET /health HTTP/1.1" 200 OK
+agent-1  | INFO:     172.19.0.6:42798 - "GET /ready HTTP/1.1" 200 OK
+agent-1  | INFO:     172.19.0.6:42798 - "POST /chat HTTP/1.1" 200 OK
+agent-1  | INFO:     172.19.0.6:42798 - "GET /chat/940606fc-e9bf-434b-9938-662871be7381/history HTTP/1.1" 200 OK
+agent-1  | INFO:     172.19.0.6:42798 - "POST /chat HTTP/1.1" 200 OK
+agent-1  | INFO:     127.0.0.1:45120 - "GET /health HTTP/1.1" 200 OK
+agent-1  | INFO:     Shutting down
+agent-1  | INFO:     Waiting for application shutdown.
+agent-1  | INFO:app:Instance instance-ca9b2b shutting down
+agent-1  | INFO:     Application shutdown complete.
+agent-1  | INFO:     Finished server process [1]
+agent-1  | ✅ Connected to Redis
+agent-1  | INFO:     Started server process [1]
+agent-1  | INFO:     Waiting for application startup.
+agent-1  | INFO:app:Starting instance instance-8541d7
+agent-1  | INFO:app:Storage: Redis ✅
+agent-1  | INFO:     Application startup complete.
+agent-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+agent-1  | INFO:     127.0.0.1:57972 - "GET /health HTTP/1.1" 200 OK
+agent-1  | INFO:     127.0.0.1:57974 - "GET /health HTTP/1.1" 200 OK
+agent-1  | INFO:     172.19.0.6:37810 - "GET /chat/940606fc-e9bf-434b-9938-662871be7381/history HTTP/1.1" 200 OK
+agent-1  | INFO:     172.19.0.6:37810 - "GET /health HTTP/1.1" 200 OK
+agent-1  | INFO:     172.19.0.6:37810 - "GET /ready HTTP/1.1" 503 Service Unavailable
+agent-1  | INFO:     172.19.0.6:37810 - "GET /ready HTTP/1.1" 200 OK

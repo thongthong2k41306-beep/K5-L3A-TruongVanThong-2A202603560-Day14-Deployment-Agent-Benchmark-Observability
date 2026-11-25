@@ -1,15 +1,21 @@
-"""
-Kết nối Redis dùng chung cho rate limiter và cost guard.
+"""Lazy Redis client: importing the app never requires a live Redis server."""
+import redis
+from redis.backoff import NoBackoff
+from redis.retry import Retry
 
-Yêu cầu:
-  • Đọc REDIS_URL từ config
-  • App vẫn phải KHỞI ĐỘNG ĐƯỢC khi Redis chưa sẵn sàng (đừng ping Redis lúc import)
-  • redis_healthy() dùng cho GET /ready: Redis không kết nối được → False
-"""
+from app.config import settings
 
-r = None  # TODO: tạo client, vd redis.from_url(settings.redis_url, decode_responses=True)
+r = redis.from_url(
+    settings.redis_url,
+    decode_responses=True,
+    socket_connect_timeout=settings.redis_timeout_seconds,
+    socket_timeout=settings.redis_timeout_seconds,
+    retry=Retry(NoBackoff(), 0),
+)
 
 
 def redis_healthy() -> bool:
-    # TODO: ping Redis; lỗi kết nối → False
-    return False
+    try:
+        return bool(r.ping())
+    except redis.RedisError:
+        return False

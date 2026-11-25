@@ -1,0 +1,270 @@
+{
+    "checkpoint":  "CP2",
+    "run_at":  "2026-11-25T15:10:11.174200+07:00",
+    "docker_version":  "29.9.3",
+    "compose_version":  "Docker Compose version v5.7.0",
+    "images":  [
+                   {
+                       "tag":  "my-agent:develop",
+                       "command":  [
+                                       "docker",
+                                       "build",
+                                       "--progress=plain",
+                                       "-f",
+                                       "02-docker/develop/Dockerfile",
+                                       "-t",
+                                       "my-agent:develop",
+                                       "."
+                                   ],
+                       "build_seconds":  2.8,
+                       "image_id":  "sha256:dfa01a5392bde21e5f250809debac861bbe62942bf7770cb13d459ef51673b3d",
+                       "size_bytes":  1667775889,
+                       "size_mb":  1667.78,
+                       "size_mib":  1590.52,
+                       "user":  "",
+                       "cmd":  [
+                                   "python",
+                                   "app.py"
+                               ],
+                       "build_log":  "reports/cp2-build-develop.log",
+                       "runtime":  {
+                                       "base_url":  "http://127.0.0.1:61076",
+                                       "requests":  [
+                                                        {
+                                                            "method":  "GET",
+                                                            "path":  "/health",
+                                                            "request_body":  null,
+                                                            "status":  200,
+                                                            "body":  {
+                                                                         "status":  "ok",
+                                                                         "uptime_seconds":  0.8,
+                                                                         "container":  true
+                                                                     },
+                                                            "headers":  {
+                                                                            "date":  "Wed, 25 Nov 2026 08:10:14 GMT",
+                                                                            "server":  "uvicorn",
+                                                                            "content-length":  "53",
+                                                                            "content-type":  "application/json",
+                                                                            "connection":  "close"
+                                                                        }
+                                                        },
+                                                        {
+                                                            "method":  "POST",
+                                                            "path":  "/ask?question=What%20is%20Docker?",
+                                                            "request_body":  null,
+                                                            "status":  200,
+                                                            "body":  {
+                                                                         "answer":  "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!"
+                                                                     },
+                                                            "headers":  {
+                                                                            "date":  "Wed, 25 Nov 2026 08:10:14 GMT",
+                                                                            "server":  "uvicorn",
+                                                                            "content-length":  "103",
+                                                                            "content-type":  "application/json",
+                                                                            "connection":  "close"
+                                                                        }
+                                                        }
+                                                    ]
+                                   }
+                   },
+                   {
+                       "tag":  "my-agent:advanced",
+                       "command":  [
+                                       "docker",
+                                       "build",
+                                       "--progress=plain",
+                                       "-f",
+                                       "02-docker/production/Dockerfile",
+                                       "-t",
+                                       "my-agent:advanced",
+                                       "."
+                                   ],
+                       "build_seconds":  2.31,
+                       "image_id":  "sha256:dd34d1fc617400b7bc0500bfa6176a678ba7a265ddab807070d4369c97a277c9",
+                       "size_bytes":  239815088,
+                       "size_mb":  239.82,
+                       "size_mib":  228.71,
+                       "user":  "appuser",
+                       "cmd":  [
+                                   "uvicorn",
+                                   "main:app",
+                                   "--host",
+                                   "0.0.0.0",
+                                   "--port",
+                                   "8000",
+                                   "--workers",
+                                   "2"
+                               ],
+                       "build_log":  "reports/cp2-build-production.log",
+                       "runtime":  {
+                                       "base_url":  "http://127.0.0.1:61095",
+                                       "requests":  [
+                                                        {
+                                                            "method":  "GET",
+                                                            "path":  "/health",
+                                                            "request_body":  null,
+                                                            "status":  200,
+                                                            "body":  {
+                                                                         "status":  "ok",
+                                                                         "uptime_seconds":  0.6,
+                                                                         "version":  "2.0.0",
+                                                                         "timestamp":  "2026-11-25T08:10:21.181803"
+                                                                     },
+                                                            "headers":  {
+                                                                            "date":  "Wed, 25 Nov 2026 08:10:20 GMT",
+                                                                            "server":  "uvicorn",
+                                                                            "content-length":  "95",
+                                                                            "content-type":  "application/json",
+                                                                            "connection":  "close"
+                                                                        }
+                                                        },
+                                                        {
+                                                            "method":  "POST",
+                                                            "path":  "/ask",
+                                                            "request_body":  {
+                                                                                 "question":  "What is Docker?"
+                                                                             },
+                                                            "status":  200,
+                                                            "body":  {
+                                                                         "answer":  "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!"
+                                                                     },
+                                                            "headers":  {
+                                                                            "date":  "Wed, 25 Nov 2026 08:10:20 GMT",
+                                                                            "server":  "uvicorn",
+                                                                            "content-length":  "103",
+                                                                            "content-type":  "application/json",
+                                                                            "connection":  "close"
+                                                                        }
+                                                        },
+                                                        {
+                                                            "method":  "GET",
+                                                            "path":  "/ready",
+                                                            "request_body":  null,
+                                                            "status":  200,
+                                                            "body":  {
+                                                                         "ready":  true
+                                                                     },
+                                                            "headers":  {
+                                                                            "date":  "Wed, 25 Nov 2026 08:10:20 GMT",
+                                                                            "server":  "uvicorn",
+                                                                            "content-length":  "14",
+                                                                            "content-type":  "application/json",
+                                                                            "connection":  "close"
+                                                                        }
+                                                        }
+                                                    ]
+                                   }
+                   }
+               ],
+    "size_reduction_percent":  85.62,
+    "docker_images_output":  "IMAGE               ID             DISK USAGE   CONTENT SIZE   EXTRA\nmy-agent:advanced   dd34d1fc6174        240MB         57.4MB        \nmy-agent:develop    dfa01a5392bd       1.67GB          426MB",
+    "compose":  {
+                    "project":  "k5-day14-docker",
+                    "base_url":  "http://127.0.0.1:8085",
+                    "override":  "compose.cp2-local.yml",
+                    "startup_output":  "#1 [internal] load local bake definitions\n#1 reading from stdin 716B done\n#1 DONE 0.0s\n\n#2 [internal] load build definition from Dockerfile\n#2 transferring dockerfile: 3.32kB 0.0s done\n#2 DONE 0.1s\n\n#3 [internal] load metadata for docker.io/library/python:3.11-slim\n#3 DONE 0.5s\n\n#4 [internal] load .dockerignore\n#4 transferring context: 486B 0.1s done\n#4 DONE 0.1s\n\n#5 [internal] load build context\n#5 DONE 0.0s\n\n#6 [builder 1/5] FROM docker.io/library/python:3.11-slim@sha256:61e01f72680f86a5279ad510818ab7b2ee9f049822589d4e34e33e044360356c\n#6 resolve docker.io/library/python:3.11-slim@sha256:61e01f72680f86a5279ad510818ab7b2ee9f049822589d4e34e33e044360356c 0.0s done\n#6 DONE 0.1s\n\n#5 [internal] load build context\n#5 transferring context: 237B 0.2s done\n#5 DONE 0.2s\n\n#7 [runtime 6/8] RUN mkdir -p /app/utils\n#7 CACHED\n\n#8 [builder 3/5] RUN apt-get update \u0026\u0026 apt-get install -y     gcc     libpq-dev     \u0026\u0026 rm -rf /var/lib/apt/lists/*\n#8 CACHED\n\n#9 [runtime 3/8] WORKDIR /app\n#9 CACHED\n\n#10 [builder 4/5] COPY 02-docker/production/requirements.txt .\n#10 CACHED\n\n#11 [builder 5/5] RUN pip install --no-cache-dir --user -r requirements.txt\n#11 CACHED\n\n#12 [builder 2/5] WORKDIR /app\n#12 CACHED\n\n#13 [runtime 7/8] COPY utils/mock_llm.py /app/utils/mock_llm.py\n#13 CACHED\n\n#14 [runtime 2/8] RUN groupadd -r appuser \u0026\u0026 useradd -r -g appuser appuser\n#14 CACHED\n\n#15 [runtime 4/8] COPY --from=builder /root/.local /home/appuser/.local\n#15 CACHED\n\n#16 [runtime 5/8] COPY 02-docker/production/main.py .\n#16 CACHED\n\n#17 [runtime 8/8] RUN chown -R appuser:appuser /app\n#17 CACHED\n\n#18 exporting to image\n#18 exporting layers done\n#18 exporting manifest sha256:3e025d4e65f53676a0f0f39c674ba24912bb53d48fb7dcf2d8051f6fd3d9f0d6 done\n#18 exporting config sha256:b39f5c5b2b4cd6a0655f00c731db1c283936da24a1194f61fb421ff1bdd8d9df done\n#18 exporting attestation manifest sha256:cae635de1ce5cad3dcc239fac3edb7ee3105bdd42dd410fa7b7be6bc92bed21b 0.0s done\n#18 exporting manifest list sha256:e41a82acd66ec4c340707841893eb063a69bd671642e9d25a45aa6534504214c 0.0s done\n#18 naming to docker.io/library/k5-day14-docker-agent:latest\n#18 naming to docker.io/library/k5-day14-docker-agent:latest done\n#18 unpacking to docker.io/library/k5-day14-docker-agent:latest 0.0s done\n#18 DONE 0.2s\n\n#19 resolving provenance for metadata file\n#19 DONE 0.0s",
+                    "ps":  [
+                               {
+                                   "Name":  "k5-day14-docker-agent-1",
+                                   "Service":  "agent",
+                                   "Image":  "k5-day14-docker-agent",
+                                   "State":  "running",
+                                   "Health":  "healthy",
+                                   "Ports":  "8000/tcp"
+                               },
+                               {
+                                   "Name":  "k5-day14-docker-nginx-1",
+                                   "Service":  "nginx",
+                                   "Image":  "nginx:alpine",
+                                   "State":  "running",
+                                   "Health":  "",
+                                   "Ports":  "127.0.0.1:8085-\u003e80/tcp"
+                               },
+                               {
+                                   "Name":  "k5-day14-docker-qdrant-1",
+                                   "Service":  "qdrant",
+                                   "Image":  "qdrant/qdrant:v1.9.0",
+                                   "State":  "running",
+                                   "Health":  "healthy",
+                                   "Ports":  "6333-6334/tcp"
+                               },
+                               {
+                                   "Name":  "k5-day14-docker-redis-1",
+                                   "Service":  "redis",
+                                   "Image":  "redis:7-alpine",
+                                   "State":  "running",
+                                   "Health":  "healthy",
+                                   "Ports":  "6379/tcp"
+                               }
+                           ],
+                    "requests_via_nginx":  [
+                                               {
+                                                   "method":  "GET",
+                                                   "path":  "/health",
+                                                   "request_body":  null,
+                                                   "status":  200,
+                                                   "body":  {
+                                                                "status":  "ok",
+                                                                "uptime_seconds":  4.7,
+                                                                "version":  "2.0.0",
+                                                                "timestamp":  "2026-11-25T08:10:42.535908"
+                                                            },
+                                                   "headers":  {
+                                                                   "Server":  "nginx",
+                                                                   "Date":  "Wed, 25 Nov 2026 08:10:42 GMT",
+                                                                   "Content-Type":  "application/json",
+                                                                   "Content-Length":  "95",
+                                                                   "Connection":  "close",
+                                                                   "X-Frame-Options":  "DENY",
+                                                                   "X-Content-Type-Options":  "nosniff",
+                                                                   "X-XSS-Protection":  "1; mode=block"
+                                                               }
+                                               },
+                                               {
+                                                   "method":  "POST",
+                                                   "path":  "/ask",
+                                                   "request_body":  {
+                                                                        "question":  "Explain microservices"
+                                                                    },
+                                                   "status":  200,
+                                                   "body":  {
+                                                                "answer":  "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic."
+                                                            },
+                                                   "headers":  {
+                                                                   "Server":  "nginx",
+                                                                   "Date":  "Wed, 25 Nov 2026 08:10:42 GMT",
+                                                                   "Content-Type":  "application/json",
+                                                                   "Content-Length":  "126",
+                                                                   "Connection":  "close",
+                                                                   "X-Frame-Options":  "DENY",
+                                                                   "X-Content-Type-Options":  "nosniff",
+                                                                   "X-XSS-Protection":  "1; mode=block"
+                                                               }
+                                               },
+                                               {
+                                                   "method":  "GET",
+                                                   "path":  "/ready",
+                                                   "request_body":  null,
+                                                   "status":  200,
+                                                   "body":  {
+                                                                "ready":  true
+                                                            },
+                                                   "headers":  {
+                                                                   "Server":  "nginx",
+                                                                   "Date":  "Wed, 25 Nov 2026 08:10:42 GMT",
+                                                                   "Content-Type":  "application/json",
+                                                                   "Content-Length":  "14",
+                                                                   "Connection":  "close",
+                                                                   "X-Frame-Options":  "DENY",
+                                                                   "X-Content-Type-Options":  "nosniff",
+                                                                   "X-XSS-Protection":  "1; mode=block"
+                                                               }
+                                               }
+                                           ],
+                    "redis_ping":  "PONG",
+                    "qdrant_health":  "200\nhealthz check passed",
+                    "agent_user":  "uid=999(appuser) gid=999(appuser) groups=999(appuser)",
+                    "nginx_config_check":  "passed (exit code 0)"
+                },
+    "passed":  true
+}

@@ -1,0 +1,900 @@
+{
+  "run_at": "2026-11-25T15:47:56.951700+07:00",
+  "base_url": "http://127.0.0.1:38885",
+  "project": "k5-day14-final-probe",
+  "ready": {
+    "status": 200,
+    "body": {
+      "ready": true
+    },
+    "headers": {
+      "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+      "server": "uvicorn",
+      "content-length": "14",
+      "content-type": "application/json",
+      "x-request-id": "4f088a1ddd0041889c0a2a2bf7ea1452",
+      "connection": "close"
+    }
+  },
+  "input_auth_checks": [
+    {
+      "label": "missing_key",
+      "status": 401,
+      "body": {
+        "detail": "Invalid or missing X-API-Key"
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+        "server": "uvicorn",
+        "content-length": "41",
+        "content-type": "application/json",
+        "x-request-id": "a9fb160a409a4c078ad9aaf7031fc91f",
+        "connection": "close"
+      }
+    },
+    {
+      "label": "wrong_key",
+      "status": 401,
+      "body": {
+        "detail": "Invalid or missing X-API-Key"
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+        "server": "uvicorn",
+        "content-length": "41",
+        "content-type": "application/json",
+        "x-request-id": "93cae5b72c0349cc89b3602e2f206ae8",
+        "connection": "close"
+      }
+    },
+    {
+      "label": "missing_question",
+      "status": 422,
+      "body": {
+        "detail": [
+          {
+            "type": "missing",
+            "loc": [
+              "body",
+              "question"
+            ],
+            "msg": "Field required",
+            "input": {}
+          }
+        ]
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+        "server": "uvicorn",
+        "content-length": "91",
+        "content-type": "application/json",
+        "x-request-id": "431d47c53c924bc6a5e737d5c3aa26ed",
+        "connection": "close"
+      }
+    },
+    {
+      "label": "empty_question",
+      "status": 422,
+      "body": {
+        "detail": [
+          {
+            "type": "string_too_short",
+            "loc": [
+              "body",
+              "question"
+            ],
+            "msg": "String should have at least 1 character",
+            "input": "",
+            "ctx": {
+              "min_length": 1
+            }
+          }
+        ]
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+        "server": "uvicorn",
+        "content-length": "148",
+        "content-type": "application/json",
+        "x-request-id": "07c347a676db4743b2e76723129c1e36",
+        "connection": "close"
+      }
+    },
+    {
+      "label": "blank_question",
+      "status": 422,
+      "body": {
+        "detail": [
+          {
+            "type": "value_error",
+            "loc": [
+              "body",
+              "question"
+            ],
+            "msg": "Value error, question must not be blank",
+            "input": "   ",
+            "ctx": {
+              "error": {}
+            }
+          }
+        ]
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+        "server": "uvicorn",
+        "content-length": "142",
+        "content-type": "application/json",
+        "x-request-id": "8350614cd4c14f7a91c664a99dbc8849",
+        "connection": "close"
+      }
+    },
+    {
+      "label": "long_question",
+      "status": 422,
+      "body": {
+        "detail": [
+          {
+            "type": "string_too_long",
+            "loc": [
+              "body",
+              "question"
+            ],
+            "msg": "String should have at most 2000 characters",
+            "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "ctx": {
+              "max_length": 2000
+            }
+          }
+        ]
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+        "server": "uvicorn",
+        "content-length": "2154",
+        "content-type": "application/json",
+        "x-request-id": "3c467d959c454437990503d788ee403f",
+        "connection": "close"
+      }
+    },
+    {
+      "label": "malformed_json",
+      "status": 422,
+      "body": {
+        "detail": [
+          {
+            "type": "json_invalid",
+            "loc": [
+              "body",
+              1
+            ],
+            "msg": "JSON decode error",
+            "input": {},
+            "ctx": {
+              "error": "Expecting property name enclosed in double quotes"
+            }
+          }
+        ]
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+        "server": "uvicorn",
+        "content-length": "158",
+        "content-type": "application/json",
+        "x-request-id": "87f079af6c5842878b7b98961a4e47e6",
+        "connection": "close"
+      }
+    }
+  ],
+  "concurrent_rate": {
+    "requests": 40,
+    "concurrency": 20,
+    "duration_seconds": 0.176,
+    "successful": 5,
+    "rate_limited": 35,
+    "ledger_nanodollars": 56250,
+    "responses": [
+      {
+        "status": 200,
+        "body": {
+          "question": "What is Docker?",
+          "answer": "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!",
+          "usage": {
+            "input_tokens": 3,
+            "output_tokens": 18,
+            "cost_usd": 1.125e-05
+          }
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "content-length": "199",
+          "content-type": "application/json",
+          "x-request-id": "1d94ae6f72e24c7dad0fbe781c445406",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "3da8c14f6dce466ab47d343d4834b18b",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 200,
+        "body": {
+          "question": "What is Docker?",
+          "answer": "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!",
+          "usage": {
+            "input_tokens": 3,
+            "output_tokens": 18,
+            "cost_usd": 1.125e-05
+          }
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "content-length": "199",
+          "content-type": "application/json",
+          "x-request-id": "65802243cb60438dac56ff477d00a541",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 200,
+        "body": {
+          "question": "What is Docker?",
+          "answer": "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!",
+          "usage": {
+            "input_tokens": 3,
+            "output_tokens": 18,
+            "cost_usd": 1.125e-05
+          }
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "content-length": "199",
+          "content-type": "application/json",
+          "x-request-id": "eaf05fb1faa0420db84f1c5ac7090256",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "2cf76d6d064944f89c4fac2f73ed69c9",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 200,
+        "body": {
+          "question": "What is Docker?",
+          "answer": "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!",
+          "usage": {
+            "input_tokens": 3,
+            "output_tokens": 18,
+            "cost_usd": 1.125e-05
+          }
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "content-length": "199",
+          "content-type": "application/json",
+          "x-request-id": "e2def3ce41ec4cde8bb59ea177672974",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 200,
+        "body": {
+          "question": "What is Docker?",
+          "answer": "Container là cách đóng gói app để chạy ở mọi nơi. Build once, run anywhere!",
+          "usage": {
+            "input_tokens": 3,
+            "output_tokens": 18,
+            "cost_usd": 1.125e-05
+          }
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "content-length": "199",
+          "content-type": "application/json",
+          "x-request-id": "3e9a06eee6574534befd6ca7c181cff3",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "381428ad2c754119985143510a6981de",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "5e45daa61a774ca0bf4c9793b586cca1",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "7569fac789e14d89b42e8067f3ae1957",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "b34401b3f3f848f797a84ae0998b50e9",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "ca7d460cc9694f329856422331a7dc3b",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "3f9d676c74254ec087437cf53cb40ba8",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "8aab299df9f942649953f42d729b0c60",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "6bc47341827d493d95c4a7af53bc11c9",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "302a577dcb9b4428921b5536b5a870e3",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "7306b979305b49579103c928409c06fe",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "1ee3be1f04b3465aa11001de78f6c3fb",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "bdbade13cc214e55a8cb6765995d9d4c",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "c33043f9250040978737e73a35f7dfa0",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "a421f52570b74cc29951cdbb4de8f284",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "3b339cebcac14ca59b1905e91fccc011",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "28fddcdd0c7d4c13afb998839a4fdbc7",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "77b6508634a442adae4276988b504e0b",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "c1845d012b6649bba3449273d4795681",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "11f5f8251e184e53bdc5310bb195faf8",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "b33ee3edb982462388dcc025df0e3a90",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "10a19eb5004949e69001dbd4ad3879cf",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "cb8a988157e44fb684144b2b0740adaa",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "4b2c774555ea4acaa8f0fea75cc9aa57",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "8452d26e0eec404898338cd79e795ad0",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "4041b3f95d764380b983babdd72f0e95",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "be226083fb024c4eb4c61d4dc58ff27c",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "026c415cc70b44ffb8f3e3b9fab10f6c",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "ae29562a7d9b4b12af61f6ff567d080b",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "c64f4f390d4d4783997960067de011ac",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "ace6f1c189984f1aa1d8575ffafb86ea",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "8b806dbc44bd4a339c9fdb90b3c40c27",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "ef216245b5a54b7fb9e557a68cd1ac2e",
+          "connection": "close"
+        }
+      },
+      {
+        "status": 429,
+        "body": {
+          "detail": "Rate limit exceeded"
+        },
+        "headers": {
+          "date": "Wed, 25 Nov 2026 08:48:12 GMT",
+          "server": "uvicorn",
+          "retry-after": "60",
+          "content-length": "32",
+          "content-type": "application/json",
+          "x-request-id": "744888563ff94e9288f552c8d23de047",
+          "connection": "close"
+        }
+      }
+    ]
+  },
+  "after_restart": {
+    "status": 429,
+    "body": {
+      "detail": "Rate limit exceeded"
+    },
+    "headers": {
+      "date": "Wed, 25 Nov 2026 08:48:15 GMT",
+      "server": "uvicorn",
+      "retry-after": "57",
+      "content-length": "32",
+      "content-type": "application/json",
+      "x-request-id": "e6a82481f88f4aedb7bd32fc6fb5a9e5",
+      "connection": "close"
+    }
+  },
+  "redis_down": {
+    "health": {
+      "status": 200,
+      "body": {
+        "status": "ok",
+        "environment": "cp5-probe-ec4b186a00"
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:48:15 GMT",
+        "server": "uvicorn",
+        "content-length": "52",
+        "content-type": "application/json",
+        "x-request-id": "94788c187a4a4f38ae50dd21d2580fd5",
+        "connection": "close"
+      }
+    },
+    "ready": {
+      "status": 503,
+      "body": {
+        "detail": "Agent not ready"
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:48:15 GMT",
+        "server": "uvicorn",
+        "content-length": "28",
+        "content-type": "application/json",
+        "x-request-id": "b1ff6a4edc3c49aba05321effccaa7f1",
+        "connection": "close"
+      }
+    },
+    "ask": {
+      "status": 503,
+      "body": {
+        "detail": "Storage temporarily unavailable"
+      },
+      "headers": {
+        "date": "Wed, 25 Nov 2026 08:48:16 GMT",
+        "server": "uvicorn",
+        "retry-after": "1",
+        "content-length": "44",
+        "content-type": "application/json",
+        "x-request-id": "3553271717644dbb96703da0cb0e1c07",
+        "connection": "close"
+      }
+    }
+  },
+  "redis_recovered": {
+    "status": 200,
+    "body": {
+      "ready": true
+    },
+    "headers": {
+      "date": "Wed, 25 Nov 2026 08:48:17 GMT",
+      "server": "uvicorn",
+      "content-length": "14",
+      "content-type": "application/json",
+      "x-request-id": "a0bfb94b29ad4c49952ea54912185d9a",
+      "connection": "close"
+    }
+  },
+  "passed": false,
+  "error": " Container k5-day14-final-probe-redis-1 Running \n Container k5-day14-final-probe-agent-1 Recreate \n Container k5-day14-final-probe-agent-1 Recreated \n Container k5-day14-final-probe-redis-1 Waiting \n Container k5-day14-final-probe-redis-1 Error dependency redis failed to start\n Container k5-day14-final-probe-agent-1 not started: condition \"service_healthy\" of service \"redis\" not met \ndependency failed to start: container k5-day14-final-probe-redis-1 is unhealthy\n"
+}

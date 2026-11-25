@@ -1,0 +1,144 @@
+{
+  "checkpoint": "CP1",
+  "run_at": "2026-11-25T14:39:26.730135+07:00",
+  "python": "3.12.3",
+  "os_name": "posix",
+  "variants": [
+    {
+      "variant": "develop",
+      "base_url": "http://127.0.0.1:45977",
+      "command": [
+        "/mnt/d/K5-AIThucchien/K5-L3A-TruongVanThong-2A202603560-Day14-Deployment-Agent-Benchmark-Observability/.venv/core/bin/python",
+        "-m",
+        "uvicorn",
+        "app:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "45977",
+        "--no-access-log"
+      ],
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/ask?question=Hello",
+          "status": 200,
+          "body": {
+            "answer": "Agent đang hoạt động tốt! (mock response) Hỏi thêm câu hỏi đi nhé."
+          },
+          "request_body": null,
+          "expected_status": 200,
+          "passed": true
+        },
+        {
+          "method": "POST",
+          "path": "/ask",
+          "status": 422,
+          "body": {
+            "detail": [
+              {
+                "type": "missing",
+                "loc": [
+                  "query",
+                  "question"
+                ],
+                "msg": "Field required",
+                "input": null
+              }
+            ]
+          },
+          "request_body": {
+            "question": "Hello"
+          },
+          "expected_status": 422,
+          "passed": true
+        },
+        {
+          "method": "GET",
+          "path": "/health",
+          "status": 404,
+          "body": {
+            "detail": "Not Found"
+          },
+          "request_body": null,
+          "expected_status": 404,
+          "passed": true
+        },
+        {
+          "method": "GET",
+          "path": "/ready",
+          "status": 404,
+          "body": {
+            "detail": "Not Found"
+          },
+          "request_body": null,
+          "expected_status": 404,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "variant": "production",
+      "base_url": "http://127.0.0.1:46649",
+      "command": [
+        "/mnt/d/K5-AIThucchien/K5-L3A-TruongVanThong-2A202603560-Day14-Deployment-Agent-Benchmark-Observability/.venv/core/bin/python",
+        "app.py"
+      ],
+      "requests": [
+        {
+          "method": "POST",
+          "path": "/ask",
+          "status": 200,
+          "body": {
+            "question": "Hello",
+            "answer": "Tôi là AI agent được deploy lên cloud. Câu hỏi của bạn đã được nhận.",
+            "model": "gpt-4o-mini"
+          },
+          "request_body": {
+            "question": "Hello"
+          },
+          "expected_status": 200,
+          "passed": true
+        },
+        {
+          "method": "GET",
+          "path": "/health",
+          "status": 200,
+          "body": {
+            "status": "ok",
+            "uptime_seconds": 0.8,
+            "version": "1.0.0",
+            "environment": "development",
+            "timestamp": "2026-11-25T07:39:32.090784+00:00"
+          },
+          "request_body": null,
+          "expected_status": 200,
+          "passed": true
+        },
+        {
+          "method": "GET",
+          "path": "/ready",
+          "status": 200,
+          "body": {
+            "ready": true
+          },
+          "request_body": null,
+          "expected_status": 200,
+          "passed": true
+        },
+        {
+          "method": "POST",
+          "path": "/ask",
+          "status": 422,
+          "body": {
+            "detail": "question field is required"
+          },
+          "request_body": {},
+          "expected_status": 422,
+          "passed": true
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,24 @@
+{
+    "checkpoint":  "CP2",
+    "status":  "docker_migration_completed",
+    "active_docker_data":  "D:\\DockerData\\DockerDesktopWSL",
+    "backup_path":  "D:\\DockerData\\wsl",
+    "copy_verified_sha256":  true,
+    "engine_verified":  "29.9.3",
+    "hello_world_passed":  true,
+    "migration_completed":  true,
+    "original_C_copy_removed_after_runtime_verification":  true,
+    "user_authorized_wsl_restart":  true,
+    "disks":  [
+                  {
+                      "DeviceID":  "C:",
+                      "FreeSpace":  3712630784,
+                      "Size":  209069494272
+                  },
+                  {
+                      "DeviceID":  "D:",
+                      "FreeSpace":  216141180928,
+                      "Size":  299642122240
+                  }
+              ]
+}

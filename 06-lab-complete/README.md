@@ -1,7 +1,10 @@
 # Part 6 — Final Project: Production-ready AI Agent
 
-Bạn tự xây một AI agent đủ chuẩn production từ **bản khung** trong thư mục này, kết hợp mọi thứ đã học ở Part 1–5.
-Mọi file đều đã có sẵn, phần việc của bạn nằm ở các chỗ ghi `TODO`. Bản khung chạy được nhưng **chưa đạt tiêu chí nào**.
+Agent đã được hoàn thiện từ bản khung Part 6, kết hợp cấu hình môi trường, API key, Redis rate limit/cost guard, JSON logging và graceful shutdown.
+
+**CP5: `PASS 12/12`, 43/43 checks passed** khi chạy nguyên bản script chấm trong Ubuntu WSL2 có Docker. Bằng chứng: [output bản đầy đủ](../reports/cp5-production-ready.txt), [metadata kiểm tra](../reports/cp5-runtime.json), [kiểm tra đồng thời và Compose](../reports/cp5-probes.json).
+
+Public URL được triển khai ở CP6. Tiêu chí "Public URL ready" của CP5 xác nhận cấu hình nền tảng và port, chưa thay thế việc kiểm tra URL cloud.
 
 Bài chỉ được tính hoàn thành khi script chấm báo **`PASS 12/12`**:
 
@@ -14,18 +17,18 @@ python check_production_ready.py
 
 ## Checklist Deliverable
 
-- [ ] Dockerfile (multi-stage, < 500 MB)
-- [ ] docker-compose.yml (agent + redis)
-- [ ] .dockerignore
-- [ ] Health check endpoint (`GET /health`)
-- [ ] Readiness endpoint (`GET /ready`)
-- [ ] API Key authentication
-- [ ] Rate limiting
-- [ ] Cost guard
-- [ ] Config từ environment variables
-- [ ] Structured logging
-- [ ] Graceful shutdown
-- [ ] Public URL ready (Railway / Render config)
+- [x] Dockerfile (multi-stage, < 500 MB)
+- [x] docker-compose.yml (agent + redis)
+- [x] .dockerignore
+- [x] Health check endpoint (`GET /health`)
+- [x] Readiness endpoint (`GET /ready`)
+- [x] API Key authentication
+- [x] Rate limiting
+- [x] Cost guard
+- [x] Config từ environment variables
+- [x] Structured logging
+- [x] Graceful shutdown
+- [x] Public URL ready (Railway / Render config)
 
 ---
 
@@ -52,50 +55,58 @@ Script tự khởi động agent của bạn, gọi API thật, build và chạy
 
 ---
 
-## Bản khung
+## Cấu trúc và trách nhiệm
 
 ```
 06-lab-complete/
 ├── app/
-│   ├── main.py           # TODO: /health, /ready, nối auth + rate limit + cost guard vào /ask, log JSON, shutdown
-│   ├── config.py         # TODO: đọc cấu hình từ biến môi trường
-│   ├── auth.py           # TODO: verify_api_key → 401
-│   ├── rate_limiter.py   # TODO: check_rate_limit → 429 (Redis)
-│   ├── cost_guard.py     # TODO: check_budget → 402, record_cost (Redis)
-│   └── redis_client.py   # TODO: kết nối Redis + redis_healthy() cho /ready
+│   ├── main.py           # API, validation, JSON logging và lifespan cleanup
+│   ├── config.py         # Cấu hình env, nạp .env với env hiện có được ưu tiên
+│   ├── auth.py           # Thiếu/sai X-API-Key → 401
+│   ├── rate_limiter.py   # Redis sorted set + Lua atomic, vượt quota → 429
+│   ├── cost_guard.py     # Giữ chỗ/đối soát budget UTC trong Redis → 402
+│   └── redis_client.py   # Client lazy, timeout 1 giây, không fallback RAM
 ├── utils/mock_llm.py     # Mock LLM — có sẵn, không cần sửa
-├── Dockerfile            # TODO: viết lại thành multi-stage production
-├── docker-compose.yml    # TODO: thêm redis
-├── .dockerignore         # TODO
-├── .env.example          # TODO: liệt kê đủ biến
-├── railway.toml          # TODO (hoặc render.yaml)
-├── render.yaml           # TODO (hoặc railway.toml)
+├── Dockerfile            # Multi-stage venv, non-root, 2 worker, PID 1 Uvicorn
+├── docker-compose.yml    # Agent + Redis AOF, named volume, noeviction
+├── .dockerignore         # Secrets, cache, venv và Part 7 không vào image
+├── .env.example          # Mẫu đầy đủ, key để trống
+├── railway.toml          # Railway dùng thư mục service này làm root
+├── render.yaml           # Blueprint web + Key Value, secret tự sinh
 ├── requirements.txt      # Có sẵn
 ├── check_production_ready.py   # Script chấm — không sửa
 └── benchmark-observability/    # Part 7 — làm sau khi xong Part 6
 ```
 
-**Gợi ý thứ tự làm:** `/health` → `config.py` → log JSON → `auth.py` → `redis_client.py` + `/ready` → `rate_limiter.py` → `cost_guard.py` → graceful shutdown → `Dockerfile` + `.dockerignore` → `docker-compose.yml` → `railway.toml` / `render.yaml`. Hướng dẫn từng bước: [CODE_LAB.md — Part 6](../CODE_LAB.md#part-6-final-project-60-phút).
+**Thứ tự đọc code:** `config.py` → `redis_client.py` → `auth.py` → `rate_limiter.py` → `cost_guard.py` → `main.py` → Dockerfile/Compose/deploy config. Phần giải thích và kết quả nằm trong [MISSION_ANSWERS.md](../MISSION_ANSWERS.md).
 
 ---
 
 ## Chạy local
 
 ```bash
-pip install -r requirements.txt
-cp .env.example .env
+# Từ gốc repo, script setup tạo .env với key ngẫu nhiên nếu chưa có:
+bash scripts/setup-wsl.sh
+source .venv/core/bin/activate
+cd 06-lab-complete
 
-# Chạy nhanh không cần Docker (cần Redis riêng nếu muốn test rate limit thật)
-AGENT_API_KEY=dev-key uvicorn app.main:app --reload
+# Bật agent + Redis; Compose đọc .env, nhưng dùng Redis nội bộ:
+docker compose -p k5-day14-final up -d --build --wait
 
-# Chạy cả agent + redis
-docker compose up --build
+# Chỉ export key/port vào terminal local, không in hoặc chép key vào báo cáo:
+set -a; source .env; set +a
+curl -i "http://localhost:${PORT:-8000}/health"
+curl -i "http://localhost:${PORT:-8000}/ready"
+curl -i -X POST "http://localhost:${PORT:-8000}/ask" \
+  -H "X-API-Key: $AGENT_API_KEY" -H 'Content-Type: application/json' \
+  -d '{"question":"What is deployment?"}'
 
-curl http://localhost:8000/health
-curl -X POST http://localhost:8000/ask \
-     -H "X-API-Key: dev-key" -H "Content-Type: application/json" \
-     -d '{"question": "What is deployment?"}'
+docker compose -p k5-day14-final down
 ```
+
+Nếu chỉ chạy Python, cần Redis riêng tại `REDIS_URL`; app vẫn khởi động khi Redis chưa có, nhưng `/ready` và `/ask` sẽ trả 503. Dùng `uvicorn app.main:app --workers 2 --env-file .env` từ thư mục này, với virtualenv đã kích hoạt. Không nạp `.env` vào shell trước khi chạy script chấm đầy đủ nếu muốn script tự tạo Redis tạm; hoặc truyền `--redis-url` tới Redis thử đang hoạt động.
+
+Budget trong lab là chi phí mô phỏng của mock, không phát sinh gọi API LLM thật. Ledger dùng đơn vị nguyên 10⁻⁹ USD, theo ngày UTC và environment. Mỗi request giữ chỗ chi phí của câu trả lời mock dài nhất rồi hoàn phần thừa sau response; các worker dùng chung ledger. Nếu process chết sau khi giữ chỗ, phần đó được giữ tới hết kỳ để tránh mở lại ngân sách không chắc chắn.
 
 ---
 
@@ -127,7 +138,7 @@ railway up
 railway domain        # nhận public URL
 ```
 
-**Render:** push repo lên GitHub → Render Dashboard → New → Blueprint → chọn repo (Render đọc `render.yaml`) → điền secret → Deploy.
+**Render:** push source đã hoàn thiện → tạo Blueprint từ `06-lab-complete/render.yaml`. Web dùng `rootDir: 06-lab-complete`, Key Value cùng Blueprint cấp `REDIS_URL`, `AGENT_API_KEY` được sinh trên nền tảng. Blueprint chỉ định `plan: free` cho hai service; Key Value free không lưu bền dữ liệu qua việc thay/restart datastore. Các field được đối chiếu theo [Render Blueprint specification](https://render.com/docs/blueprint-spec).
 
 Sau khi deploy: `python check_production_ready.py --public-url <URL>` và ghi URL vào `DEPLOYMENT.md` (xem [DAY14_DELIVERY_CHECKLIST.md](../DAY14_DELIVERY_CHECKLIST.md)).
 

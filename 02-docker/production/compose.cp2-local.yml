@@ -1,0 +1,6 @@
+# Local CP2 only: avoid Windows services/reservations on ports 80 and 443.
+# Use together with docker-compose.yml; container-side Nginx still listens on 80.
+services:
+  nginx:
+    ports: !override
+      - "127.0.0.1:8085:80"
