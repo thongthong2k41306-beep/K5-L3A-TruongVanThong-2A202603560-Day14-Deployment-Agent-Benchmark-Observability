@@ -832,6 +832,12 @@ Hoặc kích hoạt môi trường core, vào `06-lab-complete/` rồi chạy `p
 
 ## AI log
 
+### CP7 — Ngày 25/11/2026
+
+- **Yêu cầu** Hoàn thành benchmark local Exercise 7.1–7.3.
+- **Hỗ trợ AI** Chạy agent và thu mẫu metrics, bổ sung histogram độ dài câu hỏi, thực hiện bảy lần load test, chẩn đoán hai câu v2 sai từ baseline, bổ sung tài liệu JWT/HPA và soạn [báo cáo benchmark](BENCHMARK_REPORT.md).
+- **Xác minh** Gate của v2 đạt 23/23 với 0 regression sau khi sửa. Golden dataset giữ nguyên. Kết quả lấy từ các file JSON đã lưu. Phần observability production thuộc CP8.
+
 ### CP6 — Ngày 25/11/2026 (API đạt 4/4)
 
 - **Yêu cầu:** triển khai agent Part 6 bằng Render và giải thích từng bước trên dashboard.
