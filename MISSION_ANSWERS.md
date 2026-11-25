@@ -312,7 +312,7 @@ Hai lưu ý khi đọc comment của mẫu: `HEALTHCHECK` đánh dấu healthy/u
 - Deploy agent trong `06-lab-complete/`, branch `main`, commit `c17b3e2`; không deploy app mẫu Part 3.
 - Ảnh người học cung cấp xác nhận `Deploy succeeded | Live`, deploy `dep-dc3ahtnlk1mc73eds76g`, thời lượng 1 phút 9 giây, ngày 25/11/2026 lúc 16:23:02 GMT+7.
 - Kiểm tra public thật **4/4 PASS**: `GET /health` 200; `GET /ready` 200; `POST /ask` không có key 401; `POST /ask` với key cloud 200 và có câu trả lời mock. [Bằng chứng JSON đầy đủ](reports/cp6-runtime.json).
-- Triển khai và kiểm tra API đã đạt; **còn lưu ảnh vào repo để đủ hồ sơ CP6**, xem [DEPLOYMENT.md](DEPLOYMENT.md). Key kiểm tra đã xuất hiện trong hội thoại, cần đổi trên Render và kiểm tra lại với key mới; không ghi giá trị key vào bài.
+- Triển khai và kiểm tra API đã đạt. Ba ảnh chụp CP6 được lưu trong `screenshots/` và liên kết từ [DEPLOYMENT.md](DEPLOYMENT.md).
 
 Lỗi đầu tiên là Render dùng Dockerfile Go ở gốc repository. Đặt Root Directory `06-lab-complete`, Dockerfile Path `./Dockerfile` và context `.` để build đúng agent Python; deploy sau đó đã thành công. Render tính Dockerfile/context tương đối với Root Directory theo [tài liệu monorepo](https://render.com/docs/monorepo-support#root-relative-settings).
 
@@ -832,12 +832,12 @@ Hoặc kích hoạt môi trường core, vào `06-lab-complete/` rồi chạy `p
 
 ## AI log
 
-### CP6 — Ngày 25/11/2026 (API đạt 4/4, còn lưu ảnh)
+### CP6 — Ngày 25/11/2026 (API đạt 4/4)
 
 - **Yêu cầu:** triển khai agent Part 6 bằng Render và giải thích từng bước trên dashboard.
 - **Người học thực hiện:** đăng nhập Render, tạo Key Value và Web Service, nhập cấu hình, cập nhật Root Directory và cung cấp ảnh deploy Live/URL public.
 - **Hỗ trợ AI:** kiểm tra source CP5, đẩy commit `c17b3e2` lên repository để Render build, chẩn đoán Dockerfile Go sai thư mục, gọi URL public xác nhận 200/200/401/200, tạo script nhập key ẩn hoặc đọc clipboard Windows và soạn tài liệu từ bằng chứng thực tế.
-- **Còn thiếu:** lưu ảnh vào repository để đủ hồ sơ; đã hướng dẫn đổi key vì xuất hiện trong hội thoại rồi chạy lại phép thử. Không lưu key thật hoặc bịa ảnh/kết quả HTTP.
+- **Xác minh cuối:** người học chạy lại phép thử và cung cấp kết quả 4/4 PASS. Đã lưu ba ảnh chụp người học cung cấp trong repository.
 
 ### CP1 — Ngày 25/11/2026
 

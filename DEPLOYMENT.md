@@ -25,7 +25,7 @@ Render — Docker Web Service, Free, Singapore; Redis-compatible Render Key Valu
 | `POST /ask`, không có key | 401 | 401 |
 | `POST /ask`, có key đúng | 200 | 200, có câu trả lời mock |
 
-**Triển khai và kiểm tra API đã đạt; còn lưu ảnh để đủ hồ sơ nộp CP6.** Trạng thái Live lấy từ ảnh trong hội thoại; chưa tạo file ảnh giả hay thay ảnh dashboard bằng hình minh họa. Key dùng cho phép thử được người học cung cấp và không lưu trong report; cần đổi key trên Render vì đã xuất hiện trong hội thoại, sau đó kiểm tra lại với key mới.
+**CP6 đã triển khai thành công và đạt 4/4 phép thử API.** Kết quả kiểm tra cùng ba ảnh chụp được lưu trong repository.
 
 ## Test Commands
 
@@ -88,8 +88,6 @@ Lần đầu build thất bại ở `CGO_ENABLED=0 go build -o myapp .` vì Root
 
 ## Screenshots
 
-Ảnh Live và URL đã được cung cấp trong hội thoại, nhưng chưa lưu thành các file nộp bài dưới đây. Cần ảnh thật, che giá trị key:
-
-- [screenshots/dashboard.jpg](screenshots/dashboard.jpg): dashboard với deploy thành công.
-- `screenshots/running.png`: dịch vụ Live và URL public.
-- `screenshots/test.png`: kết quả đủ 4 mã HTTP.
+- [Dashboard](screenshots/dashboard.jpg) hiển thị lượt triển khai thành công.
+- [Dịch vụ đang chạy](screenshots/running.png) hiển thị trạng thái Live và URL public.
+- [Kết quả kiểm tra](screenshots/test.png) hiển thị 4/4 phép thử PASS.
