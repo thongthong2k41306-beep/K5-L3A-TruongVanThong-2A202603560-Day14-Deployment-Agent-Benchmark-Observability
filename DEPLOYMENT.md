@@ -16,16 +16,16 @@ Render — Docker Web Service, Free, Singapore; Redis-compatible Render Key Valu
 
 ## Verification Status
 
-Đã gọi URL public thật, kết quả trong [reports/cp6-public-checks.json](reports/cp6-public-checks.json):
+Đã gọi URL public thật, đủ **4/4 phép thử PASS**. Kết quả đầy đủ trong [reports/cp6-runtime.json](reports/cp6-runtime.json); lần thử ban đầu không dùng key trong [reports/cp6-public-checks.json](reports/cp6-public-checks.json):
 
 | Request | Mong đợi | Thực tế |
 |---|---|---|
 | `GET /health` | 200 | 200 |
 | `GET /ready` | 200 | 200 |
 | `POST /ask`, không có key | 401 | 401 |
-| `POST /ask`, có key đúng | 200 | Chưa kiểm tra với key cloud |
+| `POST /ask`, có key đúng | 200 | 200, có câu trả lời mock |
 
-**CP6 chưa đủ bằng chứng hoàn tất:** còn phép thử authenticated và lưu các ảnh vào repository. Trạng thái Live lấy từ ảnh trong hội thoại; chưa tạo file ảnh giả hay thay ảnh dashboard bằng hình minh họa.
+**Triển khai và kiểm tra API đã đạt; còn lưu ảnh để đủ hồ sơ nộp CP6.** Trạng thái Live lấy từ ảnh trong hội thoại; chưa tạo file ảnh giả hay thay ảnh dashboard bằng hình minh họa. Key dùng cho phép thử được người học cung cấp và không lưu trong report; cần đổi key trên Render vì đã xuất hiện trong hội thoại, sau đó kiểm tra lại với key mới.
 
 ## Test Commands
 
@@ -36,6 +36,14 @@ Trong Ubuntu, từ gốc repository:
 ```
 
 Script hỏi `Render AGENT_API_KEY (hidden):`. Copy key từ Environment của Web Service và dán vào terminal; ký tự không hiển thị khi nhập. Script chỉ gửi key tới URL HTTPS đã cấu hình, không lưu key trong báo cáo. Kết quả lưu ở `reports/cp6-runtime.json`, exit code 0 khi đủ 4/4 phép thử đạt.
+
+Nếu không dán được vào ô nhập ẩn, chạy bằng Python Windows trong PowerShell:
+
+```powershell
+python scripts/verify-deployment.py --clipboard
+```
+
+Đợi script hỏi, chuyển sang Render để copy giá trị key, quay lại terminal rồi nhấn Enter, không dán. Script đọc bảng tạm vào bộ nhớ, không in hoặc lưu key.
 
 Để chạy riêng các phép thử không cần key:
 

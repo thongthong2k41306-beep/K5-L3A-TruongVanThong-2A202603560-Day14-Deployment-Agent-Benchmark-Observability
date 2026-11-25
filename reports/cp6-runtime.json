@@ -1,0 +1,65 @@
+{
+  "run_at": "2026-11-25T09:38:53.874314+00:00",
+  "base_url": "https://k5-l3a-truongvanthong-2a202603560-day14.onrender.com",
+  "public_only": false,
+  "checks": [
+    {
+      "check": "health",
+      "method": "GET",
+      "path": "/health",
+      "expected_status": 200,
+      "status": 200,
+      "passed": true,
+      "body": {
+        "status": "ok",
+        "environment": "production"
+      },
+      "error": null
+    },
+    {
+      "check": "ready",
+      "method": "GET",
+      "path": "/ready",
+      "expected_status": 200,
+      "status": 200,
+      "passed": true,
+      "body": {
+        "ready": true
+      },
+      "error": null
+    },
+    {
+      "check": "ask_without_key",
+      "method": "POST",
+      "path": "/ask",
+      "expected_status": 401,
+      "status": 401,
+      "passed": true,
+      "body": {
+        "detail": "Invalid or missing X-API-Key"
+      },
+      "error": null
+    },
+    {
+      "check": "ask_with_key",
+      "method": "POST",
+      "path": "/ask",
+      "expected_status": 200,
+      "status": 200,
+      "passed": true,
+      "body": {
+        "question": "Hello",
+        "answer": "Đây là câu trả lời từ AI agent (mock). Trong production, đây sẽ là response từ OpenAI/Anthropic.",
+        "usage": {
+          "input_tokens": 1,
+          "output_tokens": 24,
+          "cost_usd": 1.455e-05
+        }
+      },
+      "error": null
+    }
+  ],
+  "completed_checks": 4,
+  "required_checks": 4,
+  "passed": true
+}

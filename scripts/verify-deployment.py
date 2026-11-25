@@ -3,6 +3,7 @@ import argparse
 import getpass
 import json
 import os
+import subprocess
 from pathlib import Path
 import sys
 from datetime import datetime, timezone
@@ -18,6 +19,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", default=DEFAULT_URL)
     parser.add_argument("--public-only", action="store_true", help="Run three checks without a key; CP6 remains incomplete")
+    parser.add_argument("--clipboard", action="store_true", help="On Windows, read the key from the clipboard after an Enter prompt")
     args = parser.parse_args()
     base = args.url.rstrip("/")
     parsed = urlsplit(base)
@@ -25,7 +27,24 @@ def main():
         parser.error("Use a public HTTPS URL without credentials, query, or fragment")
     key = ""
     if not args.public_only:
-        key = os.environ.get("AGENT_API_KEY", "").strip() or getpass.getpass("Render AGENT_API_KEY (hidden): ").strip()
+        if args.clipboard:
+            if os.name != "nt":
+                parser.error("--clipboard requires Windows Python; run this command in PowerShell")
+            input("Copy the Render AGENT_API_KEY, return here, then press Enter (do not paste): ")
+            powershell = Path(os.environ.get("SystemRoot", r"C:\Windows")) / "System32/WindowsPowerShell/v1.0/powershell.exe"
+            try:
+                result = subprocess.run(
+                    [str(powershell), "-NoProfile", "-NonInteractive", "-Command",
+                     "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; Get-Clipboard -Raw"],
+                    capture_output=True, encoding="utf-8-sig", check=True, timeout=15,
+                )
+            except (OSError, subprocess.SubprocessError):
+                parser.error("Could not read Windows clipboard; no key was printed or saved")
+            key = result.stdout.strip()
+            if any(character.isspace() for character in key):
+                parser.error("Clipboard contains whitespace; copy only the API key value from Render")
+        else:
+            key = os.environ.get("AGENT_API_KEY", "").strip() or getpass.getpass("Render AGENT_API_KEY (hidden): ").strip()
         if not key:
             parser.error("An API key is required for the fourth check")
     checks = [
